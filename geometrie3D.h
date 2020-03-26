@@ -19,7 +19,6 @@ void affich_vect(Vecteur A);
 
 Point set_point(double x, double y, double z);
 Point add_point(Point A, Point B);
-Point sub_point(Point A, Point B);
 
 Vecteur vect_bipoint(Point A, Point B);
 Vecteur add_vect(Vecteur V1, Vecteur V2);
