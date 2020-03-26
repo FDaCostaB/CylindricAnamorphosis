@@ -38,6 +38,6 @@ Point equation_PV(Point P, Point V, float t);
 float solution_quadratique(Coefs R, float r);
 Coefs coef_r2(Point P, Point V);
 
-Point intersect_point_cylindre(Point P, Point V);
+Point intersect_point_cylindre(Point P, Point V, float r);
 
 #endif //PAN431_GEOMETRIE3D_H

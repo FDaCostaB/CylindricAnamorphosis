@@ -84,3 +84,9 @@ Point intersect_point_cylindre(Point P, Point V, float r){ // r est le diamètre
     Point I = equation_PV(P, V, ti);
     return I;
 }
+
+Vecteur vect_normal_intersect(Point P, Point V, float r) { // r est le diamètre du cylindre
+    Vecteur N = intersect_point_cylindre(P,V,r);
+    N.z = 0;
+    return N;
+}
