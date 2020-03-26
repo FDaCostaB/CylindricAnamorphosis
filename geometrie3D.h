@@ -5,6 +5,8 @@
 #ifndef PAN431_GEOMETRIE3D_H
 #define PAN431_GEOMETRIE3D_H
 
+#include <math.h>
+
 typedef struct Point {
     double x , y , z ;
 } Point ;
@@ -13,6 +15,9 @@ typedef struct Vecteur {
     double x , y , z ;
 } Vecteur ;
 
+typedef struct Coefs {
+    double a , b , c ;
+} Coefs ;
 
 void affich_point(Point A);
 void affich_vect(Vecteur A);
@@ -28,8 +33,11 @@ float dist_point(Point A, Point B);
 
 float prod_scal(Vecteur V1, Vecteur V2);
 float norme(Vecteur V1);
-float equation_P-V(Point P, Point V, float t);
 
-float dist_point_cylindre(Point A);
+Point equation_PV(Point P, Point V, float t);
+float solution_quadratique(Coefs R, float r);
+Coefs coef_r2(Point P, Point V);
+
+Point intersect_point_cylindre(Point P, Point V);
 
 #endif //PAN431_GEOMETRIE3D_H
