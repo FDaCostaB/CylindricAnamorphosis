@@ -28,6 +28,7 @@ float dist_point(Point A, Point B);
 
 float prod_scal(Vecteur V1, Vecteur V2);
 float norme(Vecteur V1);
+float equation_P-V(Point P, Point V, float t);
 
 float dist_point_cylindre(Point A);
 

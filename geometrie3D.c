@@ -53,6 +53,11 @@ float norme(Vecteur V1){
     return val;
 }
 
+float equation_P-V(Point P, Point V, float t){
+    Vecteur L = { P.x + t*(V.x - P.x) , P.y + t*(V.y - P.y) , P.z + t*(V.z - P.z) };
+
+}
+
 float dist_point_cylindre(Point A){
 
 }

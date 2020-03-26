@@ -4,7 +4,8 @@
 
 int main(int argc, char * argv[]){
 
-    Pixel 
+    Point P; //starting position (image)
+    Point V; //Viewer position
 
 
 
