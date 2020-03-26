@@ -6,7 +6,7 @@ int main(int argc, char * argv[]){
 
     Point P; //starting position (image)
     Point V; //Viewer position
-
+    float r; //cylinder diameter
 
 
 }
