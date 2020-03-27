@@ -32,6 +32,11 @@ typedef struct dictionnaire{
     unsigned int taille;
 }Dictionnaire;
 
+typedef struct tableauCoupleFlottant{
+    UINT L,H;
+    Point2D *tab;
+}TableauCoupleFlottant;
+
 void afficher (Sequence* seq);
 
 void ajoute_queue(Sequence *l, Point n);
@@ -59,6 +64,8 @@ Pixel recupXminYmin(dictionnaire dict);
 Pixel recupXmaxYmax(dictionnaire dict);
 
 Image dictToImage(dictionnaire dict);
+
+TableauCoupleFlottant creerTableauCoordonnees(void);
 
 
 #endif //INC_2ÈME_ANNÉE_LISTES_H

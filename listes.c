@@ -201,3 +201,18 @@ void dictToImage(dictionnaire dict){
         res.tab[curr->cle.x+curr->cle.y*max.x]=curr->valeur;
     }
 }
+
+TableauCoupleFlottant creerTableauCoordonnees(UINT L,UINT H){
+    TableauCoupleFlottant *tab = (TableauCoupleFlottant*)malloc(sizeof(TableauCoupleFlottant));
+    tab->L = L;
+    tab->H = H;
+    tab->tab = (Point2D *)malloc(sizeof(Point2D)*L*H);
+
+    /* test si le tableau a ete correctement alloue */
+    if (I.tab == (Pixel *)NULL)
+    {
+        ERREUR_FATALE("Impossible de creer une image");
+    }
+
+    return tab;
+}

@@ -15,9 +15,15 @@ typedef unsigned int UINT;
  */
 typedef UINT Pixel;
 
+//Point 2d de |N
 typedef struct PointImage {
     int x , y ;
 } PointImage ;
+
+//Point 2d de |R
+typedef struct Point2D {
+    double x , y ;
+} Point2D ;
 /* 
  Type Image
  */
