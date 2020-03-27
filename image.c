@@ -1,17 +1,17 @@
 /****************************************************************************** 
-  Implémentation du module image_pbm
+  Implï¿½mentation du module image_pbm
 ******************************************************************************/
 
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include"types_macros.h"
 #include"image.h"
+#include "types_erreur.h"
 
-/* macro donnant l'indice d'un pixel de coordonnées (_x,_y) de l'image _I */
+/* macro donnant l'indice d'un pixel de coordonnï¿½es (_x,_y) de l'image _I */
 #define INDICE_PIXEL(_I,_x,_y) ((_x)-1)+(_I).L*((_y)-1)
 
-/* création d'une image PBM de dimensions L x H avec tous les pixels blancs */
+/* crï¿½ation d'une image PBM de dimensions L x H avec tous les pixels blancs */
 Image creer_image(UINT L, UINT H)
 {
 	Image I;
@@ -31,7 +31,7 @@ Image creer_image(UINT L, UINT H)
 	
 	/* remplir le tableau avec des pixels blancs */
 	for (i=0; i<L*H; i++)
-		I.tab[i] = BLANC;
+		I.tab[i] = 255;
 		
 	return I;
 }
@@ -49,7 +49,7 @@ void supprimer_image(Image *p_I)
 Pixel get_pixel_image(Image I, int x, int y)
 {
 	if (x<1 || x>I.L || y<1 || y>I.H)
-		return BLANC;
+		return 255;
 	return I.tab[INDICE_PIXEL(I,x,y)];
 }
 
@@ -87,11 +87,11 @@ return P;
 /* teste si le fichier d'identificateur f debute par un en-tete
    valide pour un fichier PBM :
    - ligne 1 : P1
-   - suivie de zero, une ou plusieurs lignes commençant toutes par #
+   - suivie de zero, une ou plusieurs lignes commenï¿½ant toutes par #
    La fonction se termine correctement si le fichier est correct, 
-   et le pointeur de fichier se trouve à la suite l'entete.
-   Sinon, l'exécution du programme est arretee avec l'affichage d'un message
-   d'erreur (appel à ERREUR_FATALE)
+   et le pointeur de fichier se trouve ï¿½ la suite l'entete.
+   Sinon, l'exï¿½cution du programme est arretee avec l'affichage d'un message
+   d'erreur (appel ï¿½ ERREUR_FATALE)
     */ 
 void entete_fichier_pbm(FILE *f)
 {
@@ -113,13 +113,13 @@ void entete_fichier_pbm(FILE *f)
 	{
 		ERREUR_FATALE("entete_fichier_pbm : ligne 1 incorrecte\n");
 	}
-	if ((ligne[0] != 'P') || (ligne[1] != '1'))
+	if ((ligne[0] != 'P') || (ligne[1] != '2'))
 	{
 		ERREUR_FATALE("entete_fichier_pbm : ligne 1 incorrecte\n");
 	}
 	free(ligne);
 	
-	/* lecture des éventuelles lignes commençant par # */
+	/* lecture des ï¿½ventuelles lignes commenï¿½ant par # */
 	bool boucle_ligne_commentaire = true;
 	do
 	{
@@ -129,7 +129,7 @@ void entete_fichier_pbm(FILE *f)
 			ERREUR_FATALE("entete_fichier_pbm : fin fichier inattendue\n");
 		}
 		
-		/* lire un caractere et tester par rapport à '#' */
+		/* lire un caractere et tester par rapport ï¿½ '#' */
 		char c;
 		fscanf(f, "%c", &c);
 		if (c=='#')
@@ -142,7 +142,7 @@ void entete_fichier_pbm(FILE *f)
 		}
 		else
 		{
-			/* reculer d'un caractère dans f */
+			/* reculer d'un caractï¿½re dans f */
 			fseek(f, -1, SEEK_CUR);
 			boucle_ligne_commentaire = false;
 		}
@@ -150,7 +150,7 @@ void entete_fichier_pbm(FILE *f)
 	
 }
   
-/* lire l'image dans le fichier nommé nom_f
+/* lire l'image dans le fichier nommï¿½ nom_f
    s'il y a une erreur dans le fichier le programme s'arrete en affichant
    un message */
 Image lire_fichier_image(char *nom_f)
@@ -191,23 +191,27 @@ Image lire_fichier_image(char *nom_f)
           fscanf(f,"%c",&res_fscanf);
         }
 
-	/* création de l'image I de dimensions L x H */
+	/* crï¿½ation de l'image I de dimensions L x H */
 	I=creer_image(x,y);
 	
 	
-	/* lecture des pixels du fichier - lecture caractère par caractère
+	/* lecture des pixels du fichier - lecture caractï¿½re par caractï¿½re
 	   seuls les caracteres '0' (BLANC) ou '1' (NOIR) 
 	   doivent etre pris en compte */
 	L=x;
 	H=y;
 
 	for (int i=0; i<L*H; i++) {
-          res_fscanf='2';
-          while (res_fscanf != '0' && res_fscanf != '1') {
+          res_fscanf='A';
+          int pixel = 0;
+          while (res_fscanf < '0' || res_fscanf > '9') {
             fscanf(f, "%c", &res_fscanf);
           }
-          if (res_fscanf == '1')
-            I.tab[i] = NOIR;
+          while(res_fscanf >= '0' && res_fscanf <= '9'){
+              pixel = pixel*10 + (res_fscanf - '0');
+              fscanf(f, "%c", &res_fscanf);
+          }
+           I.tab[i] = pixel;
         }
 
 	/* fermeture du fichier */
@@ -216,17 +220,19 @@ Image lire_fichier_image(char *nom_f)
 	return I;
 }
 
-/* écrire l'image I à l'écran */
-void ecrire_image(Image I){
+/* ï¿½crire l'image I ï¿½ l'ï¿½cran */
+void ecrire_image(Image I,FILE *f){
   UINT L=largeur_image(I);
   UINT H=hauteur_image(I);
-
+  fprintf(f,"P2\n");
+  fprintf(f,"%d %d\n", I.L, I.H);
+  fprintf(f,"255\n");
   for (int i=0; i<L*H; i++) {
-    printf("%u",I.tab[i]);
+    fprintf(f,"%u ",I.tab[i]);
     if ((i+1)%L==0 )
-      printf("\n");
+      fprintf(f,"\n");
   }
-  printf("\n");
+  fprintf(f,"\n");
 }
 
 bool est_vide(Image I){

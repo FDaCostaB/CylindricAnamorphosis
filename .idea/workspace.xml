@@ -10,12 +10,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="776d5862-4f62-41f8-95ea-44889f6c893f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/geometrie3D.c" beforeDir="false" afterPath="$PROJECT_DIR$/geometrie3D.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/geometrie3D.h" beforeDir="false" afterPath="$PROJECT_DIR$/geometrie3D.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image.c" beforeDir="false" afterPath="$PROJECT_DIR$/image.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image.h" beforeDir="false" afterPath="$PROJECT_DIR$/image.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/listes.c" beforeDir="false" afterPath="$PROJECT_DIR$/listes.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/listes.h" beforeDir="false" afterPath="$PROJECT_DIR$/listes.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.c" beforeDir="false" afterPath="$PROJECT_DIR$/test.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +46,11 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\fabie\Documents\Fac\S4\PAN\CylindricAnamorphosis" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true">
       <method v="2">
@@ -60,7 +69,7 @@
       <option name="presentableId" value="Default" />
       <updated>1585231191735</updated>
       <workItem from="1585231196508" duration="2579000" />
-      <workItem from="1585298015316" duration="3069000" />
+      <workItem from="1585298015316" duration="8158000" />
     </task>
     <servers />
   </component>
@@ -76,5 +85,31 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="582" y="161" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1585298257817" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/image.c</url>
+          <line>203</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/image.c</url>
+          <line>214</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/image.c</url>
+          <line>223</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/image.c</url>
+          <line>235</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

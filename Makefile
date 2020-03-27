@@ -37,7 +37,7 @@ INCLUDEOPTS = -I$(INCDIR)
 COMPILOPTS = -g -Wall $(INCLUDEOPTS)
 
 # liste des executables
-EXECUTABLES = test_simplif-contours_6 test_distance
+EXECUTABLES = test
 
 
 #############################################################################
@@ -60,57 +60,24 @@ all : $(EXECUTABLES)
 	@echo "---------------------------------------------"
 	$(CC) -c $(COMPILOPTS) $<
 
-geom2d.o : geom2d.c geom2d.h
+geometrie3d.o : geometrie3d.c geometrie3d.h
 
+image.o : image.c image.h
 
-
+listes.o : listes.c listes.h
 
 ########################################################
-# regles explicites de creation des executables
+# regles explicites de creation des executables        #
+########################################################
 
-contours.o : contours.c contours.h geom2d.h image.h types_macros.h
+test.o : test.c image.h listes.h geometrie3d.h
 	@echo ""
 	@echo "---------------------------------------------"
 	@echo "Compilation du module "$*
 	@echo "---------------------------------------------"
 	$(CC) -c $(COMPILOPTS) $<
 
-test_simplif-contours_6.o : test_simplif-contours_6.c image.h contours.h
-	@echo ""
-	@echo "---------------------------------------------"
-	@echo "Compilation du module "$*
-	@echo "---------------------------------------------"
-	$(CC) -c $(COMPILOPTS) $<
-
-image.o : image.c image.h types_macros.h
-	@echo ""
-	@echo "---------------------------------------------"
-	@echo "Compilation du module "$*
-	@echo "---------------------------------------------"
-	$(CC) -c $(COMPILOPTS) $<
-
-fichier_EPS.o : fichier_EPS.c fichier_EPS.h geom2d.h
-	@echo ""
-	@echo "---------------------------------------------"
-	@echo "Compilation du module "$*
-	@echo "---------------------------------------------"
-	$(CC) -c $(COMPILOPTS) $<
-
-test_distance.o : test_distance.c
-	@echo ""
-	@echo "---------------------------------------------"
-	@echo "Compilation du module "$*
-	@echo "---------------------------------------------"
-	$(CC) -c $(COMPILOPTS) $<
-
-test_simplif-contours_6 : test_simplif-contours_6.o image.o geom2d.o contours.o fichier_EPS.o
-	@echo ""
-	@echo "---------------------------------------------"
-	@echo "Creation de l'executable "$@
-	@echo "---------------------------------------------"
-	$(CC) $^ $(LDOPTS) -o $@
-
-test_distance : test_distance.o geom2d.o
+test: test.o image.o geometrie3d.o listes.o
 	@echo ""
 	@echo "---------------------------------------------"
 	@echo "Creation de l'executable "$@

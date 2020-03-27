@@ -3,6 +3,7 @@
 //
 
 #include "geometrie3D.h"
+#include "types_erreur.h"
 
 void affich_point(Point A){
     printf("Coordinates of the point : (%lf ; %lf ; %lf) \n",A.x,A.y,A.z);
@@ -75,7 +76,6 @@ double solution_quadratique(Coefs R, double r){ //r est le diamètre du cylindre
 
 Coefs coef_r2(Point P, Point V){
 
-    Point E = equation_PV(P, V, t);
     Coefs R;
     R.a = P.x*P.x + P.y*P.y - 2*P.x*V.x- 2*P.y*V.y + V.x*V.x +V.y*V.y ;
     R.b = 2*P.x*V.x + 2*P.y*V.y - 2*P.x*P.x - 2*P.y*P.y;
@@ -91,8 +91,8 @@ Point intersect_point_cylindre(Point P, Point V, double r){ // r est le diamètr
 }
 
 Vecteur vect_normal_intersect(Point P, Point V, double r) { // r est le diamètre du cylindre
-    Vecteur N = intersect_point_cylindre(P,V,r);
-    N.z = 0;
+    Point inter = intersect_point_cylindre(P,V,r);
+    Vecteur N = {inter.x, inter.y, 0};
     return N;
 }
 

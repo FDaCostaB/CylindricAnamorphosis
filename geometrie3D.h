@@ -45,6 +45,6 @@ Vecteur vect_normal_intersect(Point P, Point V, double r);
 Vecteur proj_orthogonale(Vecteur V,Vecteur N);
 Vecteur reflexion_vect(Vecteur PV,Vecteur vect_normal);
 
-Point intersection_feuille(Point I,Vecteur R)
+Point intersection_feuille(Point I,Vecteur R);
 
 #endif //PAN431_GEOMETRIE3D_H

@@ -5,8 +5,6 @@
 #include <stdlib.h>
 #include "listes.h"
 
-
-
 void ajoute_queue(Sequence *S, Point Pcurr) {
     Cellule *curr;
     Cellule *c;

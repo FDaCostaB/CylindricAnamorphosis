@@ -6,6 +6,7 @@
 #define INC_2ÈME_ANNÉE_LISTES_H
 
 #include <stdio.h>
+#include "geometrie3D.h"
 
 struct Cellule{
     Point P;
