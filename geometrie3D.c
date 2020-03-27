@@ -33,37 +33,42 @@ Vecteur add_vect(Vecteur V1, Vecteur V2){
     return V;
 }
 
-Vecteur mult_scal(int x, Vecteur V1){
+Vecteur mult_scal(double x, Vecteur V1){
     Vecteur V = {V1.x * x, V1.y * x, V1.z * x};
     return V;
 }
 
-float dist_point(Point A, Point B){
-    float val = sqrt((A.x-B.x)*(A.x-B.x) + (A.y-B.y)*(A.y-B.y) + (A.z-B.z)*(A.z-B.z));
+double dist_point(Point A, Point B){
+    double val = sqrt((A.x-B.x)*(A.x-B.x) + (A.y-B.y)*(A.y-B.y) + (A.z-B.z)*(A.z-B.z));
     return val;
 }
 
-float prod_scal(Vecteur V1, Vecteur V2){
-    float val = (V1.x * V2.x) + (V1.y * V2.y) + (V1.z * V2.z);
+double prod_scal(Vecteur V1, Vecteur V2){
+    double val = (V1.x * V2.x) + (V1.y * V2.y) + (V1.z * V2.z);
     return val;
 }
 
-float norme(Vecteur V1){
-    float val = sqrt((V1.x*V1.x + V1.y*V1.y + V1.z*V1.z));
+double norme(Vecteur V1){
+    double val = sqrt((V1.x*V1.x + V1.y*V1.y + V1.z*V1.z));
     return val;
 }
 
-Point equation_PV(Point P, Point V, float t){
+Point equation_PV(Point P, Point V, double t){
     Point L = { P.x + t*(V.x - P.x) , P.y + t*(V.y - P.y) , P.z + t*(V.z - P.z) };
     return L;
 }
 
-float solution_quadratique(Coefs R, float r){ //r est le diamètre du cylindre
-    float a = R.a;
-    float b = R.b;
-    float c = R.c;
+Point equation_droite(Point I, Vecteur R, double t){
+    Point L = { I.x + t * R.x , I.y + t * R.y , I.z + t * R.z };
+    return L;
+}
 
-    float ti = (float)(-b + sqrt(b*b - 4*a*( c- r*r )))/(float)(2*a);
+double solution_quadratique(Coefs R, double r){ //r est le diamètre du cylindre
+    double a = R.a;
+    double b = R.b;
+    double c = R.c;
+
+    double ti = (double)(-b + sqrt(b*b - 4*a*( c- r*r )))/(double)(2*a);
 
     return ti;
 }
@@ -78,15 +83,33 @@ Coefs coef_r2(Point P, Point V){
     return R;
 }
 
-Point intersect_point_cylindre(Point P, Point V, float r){ // r est le diamètre du cylindre
+Point intersect_point_cylindre(Point P, Point V, double r){ // r est le diamètre du cylindre
     Coefs R = coef_r2(P,V);
-    float ti = solution_quadratique(R, r);
+    double ti = solution_quadratique(R, r);
     Point I = equation_PV(P, V, ti);
     return I;
 }
 
-Vecteur vect_normal_intersect(Point P, Point V, float r) { // r est le diamètre du cylindre
+Vecteur vect_normal_intersect(Point P, Point V, double r) { // r est le diamètre du cylindre
     Vecteur N = intersect_point_cylindre(P,V,r);
     N.z = 0;
     return N;
+}
+
+Vecteur proj_orthogonale(Vecteur V,Vecteur N){
+    double lambda = prod_scal(V,N) / norme(N) ;
+    Vecteur proj = mult_scal(lambda,N) ;
+    return proj;
+}
+
+Vecteur reflexion_vect(Vecteur PV,Vecteur vect_normal){
+    Vecteur proj = proj_orthogonale(PV,vect_normal);
+    Vecteur reflexion = add_vect(mult_scal(2,proj),mult_scal(-1,PV));
+    return reflexion;
+}
+
+Point intersection_feuille(Point I,Vecteur R){
+    double t = -1 * (I.z / R.z);
+    Point res = equation_droite(I,R,t);
+    return res;
 }

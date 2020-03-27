@@ -27,17 +27,24 @@ Point add_point(Point A, Point B);
 
 Vecteur vect_bipoint(Point A, Point B);
 Vecteur add_vect(Vecteur V1, Vecteur V2);
-Vecteur mult_scal(int x, Vecteur V1);
+Vecteur mult_scal(double x, Vecteur V1);
 
-float dist_point(Point A, Point B);
+double dist_point(Point A, Point B);
 
-float prod_scal(Vecteur V1, Vecteur V2);
-float norme(Vecteur V1);
+double prod_scal(Vecteur V1, Vecteur V2);
+double norme(Vecteur V1);
 
-Point equation_PV(Point P, Point V, float t);
-float solution_quadratique(Coefs R, float r);
+Point equation_PV(Point P, Point V, double t); Point equation_droite(Point I, Vecteur R, double t);
+double solution_quadratique(Coefs R, double r);
 Coefs coef_r2(Point P, Point V);
 
-Point intersect_point_cylindre(Point P, Point V, float r);
+Point intersect_point_cylindre(Point P, Point V, double r);
+
+Vecteur vect_normal_intersect(Point P, Point V, double r);
+
+Vecteur proj_orthogonale(Vecteur V,Vecteur N);
+Vecteur reflexion_vect(Vecteur PV,Vecteur vect_normal);
+
+Point intersection_feuille(Point I,Vecteur R)
 
 #endif //PAN431_GEOMETRIE3D_H

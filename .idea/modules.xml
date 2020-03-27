@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-<<<<<<< HEAD
-      <module fileurl="file://$PROJECT_DIR$/.idea/PAN431.iml" filepath="$PROJECT_DIR$/.idea/PAN431.iml" />
-=======
       <module fileurl="file://$PROJECT_DIR$/.idea/CylindricAnamorphosis.iml" filepath="$PROJECT_DIR$/.idea/CylindricAnamorphosis.iml" />
->>>>>>> c3114cd29b1dd7ab95532db2eba2fab7035640a2
     </modules>
   </component>
 </project>
