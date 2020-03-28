@@ -54,9 +54,13 @@ void afficherDict (Dictionnaire *dict);
 
 Pixel recupValeur (Dictionnaire *dict, PointImage cle);
 
+Cellule_dict *trouveCouple(Dictionnaire *dict, PointImage cle);
+
 void ajoutModifEntree(Dictionnaire *dict, PointImage cle,Pixel val);
 
 void detruireEntree (Dictionnaire *dict, PointImage cle);
+
+void detruireDico (Dictionnaire *dict );
 
 Pixel popEntree (Dictionnaire *dict, PointImage cle);
 
@@ -64,8 +68,10 @@ PointImage recupXminYmin(Dictionnaire *dict);
 
 PointImage recupXmaxYmax(Dictionnaire *dict);
 
+//NON TESTE
 Image dictToImage(Dictionnaire *dict);
 
+//NON TESTE
 TableauCoupleFlottant *creerTableauCoordonnees(UINT L,UINT H);
 
 

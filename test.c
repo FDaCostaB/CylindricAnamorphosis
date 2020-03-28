@@ -19,6 +19,6 @@ int main(int argc, char * argv[]){
     if(f==NULL) ERREUR_FATALE("Impossible d'ouvrir le fichier résultat en écriture.\n");
 
     //Image vide = creer_image();
-    Image imageLu = lire_fichier_image(argv[1]);
-    ecrire_image(imageLu,f);
+    Image imageLue = lire_fichier_image(argv[1]);
+    ecrire_image(imageLue,f);
 }

@@ -8,14 +8,165 @@
 #include "types_erreur.h"
 
 int main(int argc, char * argv[]){
-    
-    FILE *f;
 
-    if(argc != 3 ) ERREUR_FATALE("Utilisation commande : ./main fichier_image fichier_resultat\n");
-    f = fopen(argv[2],"w");
-    if(f==NULL) ERREUR_FATALE("Impossible d'ouvrir le fichier résultat en écriture.\n");
+    //Dictionnaire *nouveauDict (void) ;
+    Dictionnaire * dico;
+    dico = nouveauDict();
+    Pixel p;
+    Cellule_dict *cell = nouvelle_cellule_dict() ;
+    PointImage minMax = {0,0};
 
-    //Image vide = creer_image();
-    Image imageLu = lire_fichier_image(argv[1]);
-    ecrire_image(imageLu,f);
+    //void ajoutModifEntree(Dictionnaire *dict, PointImage cle,Pixel val);
+    printf("\n###########################\n Test ajoutModifEntree (Ajout) \n###########################\n");
+
+    PointImage A = {-84,6} ;
+    PointImage B = {0,3} ;
+    PointImage C = {32,-648} ;
+    PointImage D = {162,-2048} ;
+    PointImage Inconnu = {85,-12} ;
+
+    ajoutModifEntree(dico, A, 55);
+    ajoutModifEntree(dico, B, 0);
+    ajoutModifEntree(dico, C, 255);
+    ajoutModifEntree(dico, D, 14);
+
+    //void afficherDict (Dictionnaire *dict);
+    printf("\n###########################\n Test afficherDict \n###########################\n");
+    afficherDict(dico);
+
+    //Pixel recupValeur (Dictionnaire *dict, PointImage cle);
+    printf("\n###########################\n Test recupValeur \n###########################\n");
+    p = recupValeur(dico,B);
+    printf("( %d, %d ) : %d \n",B.x,B.y,p);
+
+    p = recupValeur(dico,Inconnu);
+    printf("( %d, %d ) : %d \n",Inconnu.x,Inconnu.y,p);
+
+    p = recupValeur(dico,A);
+    printf("( %d, %d ) : %d \n",A.x,A.y,p);
+
+    p = recupValeur(dico,D);
+    printf("( %d, %d ) : %d \n",D.x,D.y,p);
+
+    //Cellule_dict *trouveCouple(Dictionnaire *dict, PointImage cle)
+    printf("\n###########################\n Test trouveCouple \n###########################\n");
+
+    cell = trouveCouple(dico,B);
+    printf("( %d, %d ) : %d \n",cell->cle.x,cell->cle.y,cell->valeur);
+
+    cell = trouveCouple(dico,Inconnu);
+    if(cell!=NULL)printf("( %d, %d ) : %d \n",cell->cle.x,cell->cle.y,cell->valeur);
+    else printf("-1\n");
+
+    cell = trouveCouple(dico,A);
+    printf("( %d, %d ) : %d \n",cell->cle.x,cell->cle.y,cell->valeur);
+
+    cell = trouveCouple(dico,D);
+    printf("( %d, %d ) : %d \n",cell->cle.x,cell->cle.y,cell->valeur);
+
+    //void detruireEntree (Dictionnaire *dict, PointImage cle);
+    printf("\n###########################\n Test detruireEntree \n###########################\n");
+
+    detruireEntree(dico,B);
+    afficherDict(dico);
+
+    detruireEntree(dico,A);
+    afficherDict(dico);
+
+    detruireEntree(dico,D);
+    afficherDict(dico);
+
+    //void ajoutModifEntree(Dictionnaire *dict, PointImage cle,Pixel val);
+    printf("\n###########################\n Test ajoutModifEntree (Ajout et Modif (32,-648) = 69 )\n###########################\n");
+    ajoutModifEntree(dico, A, 55);
+    ajoutModifEntree(dico, B, 0);
+    ajoutModifEntree(dico, C, 69);
+    ajoutModifEntree(dico, D, 14);
+
+    afficherDict(dico);
+
+    printf("\n###########################\n Test ajoutModifEntree (Modif (-2048,-2048) = 248 )\n###########################\n");
+
+    ajoutModifEntree(dico, D, 248);
+
+    afficherDict(dico);
+
+    //Pixel popEntree (Dictionnaire *dict, PointImage cle);
+    printf("\n###########################\n Test popEntree \n###########################\n");
+
+    p = popEntree(dico,C);
+    afficherDict(dico);
+    printf("( %d, %d ) : %d \n",C.x,C.y,p);
+
+    p = popEntree(dico,D);
+    afficherDict(dico);
+    printf("( %d, %d ) : %d \n",D.x,D.y,p);
+
+    ajoutModifEntree(dico, C, 69);
+    ajoutModifEntree(dico, D, 14);
+    afficherDict(dico);
+
+    p = popEntree(dico,B);
+    afficherDict(dico);
+    printf("( %d, %d ) : %d \n",B.x,B.y,p);
+
+
+
+    //PointImage recupXminYmin(Dictionnaire *dict);
+    printf("\n###########################\n Test recupXminYmin \n###########################\n");
+    ajoutModifEntree(dico, B, 14);
+    afficherDict(dico);
+    minMax = recupXminYmin(dico);
+    printf("( %d, %d )\n",minMax.x, minMax.y);
+
+    //PointImage recupXmaxYmax(Dictionnaire *dict);
+    printf("\n###########################\n Test recupXmaxYmax \n###########################\n");
+    minMax = recupXmaxYmax(dico);
+    printf("( %d, %d )\n",minMax.x, minMax.y);
+
+    //void detruireDico (Dictionnaire *dict );
+    printf("\n###########################\n Test detruireDico \n###########################\n");
+    detruireDico(dico);
+    dico=nouveauDict();
+    afficherDict(dico);
+
+    printf("\n###########################\n Test recupXmaxYmax + recupXminYmin \n###########################\n");
+    ajoutModifEntree(dico, A, 14);
+    ajoutModifEntree(dico, B, 14);
+    ajoutModifEntree(dico, C, 14);
+    ajoutModifEntree(dico, D, 14);
+    afficherDict(dico);
+
+    minMax = recupXmaxYmax(dico);
+    printf("( %d, %d )\n",minMax.x, minMax.y);
+
+    minMax = recupXminYmin(dico);
+    printf("( %d, %d )\n",minMax.x, minMax.y);
+
+    printf("\n###########################\n Test detruireDico \n###########################\n");
+    detruireDico(dico);
+    dico=nouveauDict();
+    afficherDict(dico);
+
+    printf("\n###########################\n Test recupXmaxYmax + recupXminYmin \n###########################\n");
+    ajoutModifEntree(dico, D, 14);
+    ajoutModifEntree(dico, C, 14);
+    ajoutModifEntree(dico, B, 14);
+    ajoutModifEntree(dico, A, 14);
+    afficherDict(dico);
+
+    minMax = recupXmaxYmax(dico);
+    printf("( %d, %d )\n",minMax.x, minMax.y);
+
+    minMax = recupXminYmin(dico);
+    printf("( %d, %d )\n",minMax.x, minMax.y);
+
+
+    /* NON TESTE
+     *
+     * Image dictToImage(Dictionnaire *dict);
+     * TableauCoupleFlottant *creerTableauCoordonnees(UINT L,UINT H);
+     *
+     * */
+
 }

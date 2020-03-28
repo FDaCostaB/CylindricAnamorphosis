@@ -71,7 +71,7 @@ void afficherDict (Dictionnaire *dict){
         printf("{ ");
         while(curr!=NULL){
             if(curr->suivant==NULL){
-                printf(" ( %d, %d ) : %d }", curr->cle.x, curr->cle.y, curr->valeur);
+                printf(" ( %d, %d ) : %d }\n", curr->cle.x, curr->cle.y, curr->valeur);
             }else{
                 printf(" ( %d, %d ) : %d,", curr->cle.x, curr->cle.y, curr->valeur);
             }
@@ -119,36 +119,62 @@ void ajoutModifEntree(Dictionnaire *dict, PointImage cle,Pixel val){
 
 void detruireEntree (Dictionnaire *dict, PointImage cle){
     Cellule_dict *curr = dict->tete;
-    Cellule_dict *aSuppr;
+    Cellule_dict *aSuppr = NULL;
     if(curr==NULL) {
         return;
     }
-    while(curr!=NULL){
+    if(curr->cle.x==cle.x && curr->cle.y==cle.y){
+        aSuppr=curr;
+        dict->tete=curr->suivant;
+        free(aSuppr);
+        return;
+    }
+    while(curr!=NULL && curr->suivant!=NULL){
         if(curr->suivant->cle.x==cle.x && curr->suivant->cle.y==cle.y){
             aSuppr=curr->suivant;
             curr->suivant=curr->suivant->suivant;
         }
         curr = curr->suivant;
     }
-    if(curr!=NULL)free(aSuppr);
+    if(aSuppr!=NULL)free(aSuppr);
     else printf("Clé introuvable et dictionnaire non modifié...");
+}
+
+void detruireDico (Dictionnaire *dict) {
+    if (dict != NULL) {
+        while (dict->tete != NULL){
+            detruireEntree(dict, dict->tete->cle);
+        }
+        dict->taille=0;
+        free(dict);
+    }
+    else {
+        printf("Dictionnaire déjà vide...");
+    }
 }
 
 Pixel popEntree (Dictionnaire *dict, PointImage cle){
     Cellule_dict *curr = dict->tete;
-    Cellule_dict *aSuppr;
+    Cellule_dict *aSuppr = NULL;
     Pixel res;
     if(curr==NULL) {
         return -1;
     }
-    while(curr!=NULL){
+    if(curr->cle.x==cle.x && curr->cle.y==cle.y){
+        aSuppr=curr;
+        dict->tete=curr->suivant;
+        res = aSuppr->valeur;
+        free(aSuppr);
+        return res;
+    }
+    while(curr!=NULL && curr->suivant!=NULL){
         if(curr->suivant->cle.x==cle.x && curr->suivant->cle.y==cle.y){
             aSuppr=curr->suivant;
             curr->suivant=curr->suivant->suivant;
         }
         curr = curr->suivant;
     }
-    if(curr!=NULL){
+    if(aSuppr!=NULL){
         res=aSuppr->valeur;
         free(aSuppr);
         return res;
@@ -185,7 +211,7 @@ PointImage recupXmaxYmax(Dictionnaire *dict){
     max.y=curr->cle.y;
     while(curr!=NULL){
         if(curr->cle.x>max.x)max.x=curr->cle.x;
-        if(curr->cle.y<max.y)max.y=curr->cle.y;
+        if(curr->cle.y>max.y)max.y=curr->cle.y;
         curr = curr->suivant;
     }
     return max;
