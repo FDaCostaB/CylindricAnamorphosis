@@ -37,7 +37,7 @@ INCLUDEOPTS = -I$(INCDIR)
 COMPILOPTS = -g -Wall $(INCLUDEOPTS)
 
 # liste des executables
-EXECUTABLES = test
+EXECUTABLES = test test_dico test_proj
 
 
 #############################################################################
@@ -70,7 +70,14 @@ listes.o : listes.c listes.h
 # regles explicites de creation des executables        #
 ########################################################
 
-test.o : test.c image.h listes.h geometrie3d.h
+test_dico.o : test_dico.c image.h listes.h geometrie3d.h
+	@echo ""
+	@echo "---------------------------------------------"
+	@echo "Compilation du module "$*
+	@echo "---------------------------------------------"
+	$(CC) -c $(COMPILOPTS) $<
+
+test_proj.o : test_proj.c image.h listes.h geometrie3d.h
 	@echo ""
 	@echo "---------------------------------------------"
 	@echo "Compilation du module "$*
@@ -78,6 +85,20 @@ test.o : test.c image.h listes.h geometrie3d.h
 	$(CC) -c $(COMPILOPTS) $<
 
 test: test.o image.o geometrie3d.o listes.o
+	@echo ""
+	@echo "---------------------------------------------"
+	@echo "Creation de l'executable "$@
+	@echo "---------------------------------------------"
+	$(CC) $^ $(LDOPTS) -o $@
+
+test_dico: test_dico.o image.o geometrie3d.o listes.o
+	@echo ""
+	@echo "---------------------------------------------"
+	@echo "Creation de l'executable "$@
+	@echo "---------------------------------------------"
+	$(CC) $^ $(LDOPTS) -o $@
+
+test_proj: test_proj.o image.o geometrie3d.o listes.o
 	@echo ""
 	@echo "---------------------------------------------"
 	@echo "Creation de l'executable "$@

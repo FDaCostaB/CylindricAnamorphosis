@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "listes.h"
-#include "types_erreur.h"
 
 void ajoute_queue(Sequence *S, Point Pcurr) {
     Cellule *curr;
@@ -61,39 +60,38 @@ Dictionnaire *nouveauDict (void){
     Dictionnaire *dict = (Dictionnaire *)malloc(sizeof(Dictionnaire));
     dict->tete=NULL;
     dict->taille = 0;
+    return dict;
 }
 
 void afficherDict (Dictionnaire *dict){
     Cellule_dict *curr = dict->tete;
     if(curr==NULL) {
-        printf("Dictionnaire vide...\n")
+        printf("Dictionnaire vide...\n");
     } else{
         printf("{ ");
         while(curr!=NULL){
             if(curr->suivant==NULL){
-                printf(" ( %f, %f ) : %d }", curr->cle.x, curr->cle.y, curr->valeur);
+                printf(" ( %d, %d ) : %d }", curr->cle.x, curr->cle.y, curr->valeur);
             }else{
-                printf(" ( %f, %f ) : %d,", curr->cle.x, curr->cle.y, curr->valeur);
+                printf(" ( %d, %d ) : %d,", curr->cle.x, curr->cle.y, curr->valeur);
             }
             curr = curr->suivant;
         }
     }
 }
 
-Pixel recupValeur (dictionnaire dict, PointImage cle){
+Pixel recupValeur (Dictionnaire *dict, PointImage cle){
     Cellule_dict *curr = dict->tete;
-    if(curr==NULL) {
-        return -1;
-    }
     while(curr!=NULL){
         if(curr->cle.x==cle.x && curr->cle.y==cle.y){
             return curr->valeur;
         }
         curr = curr->suivant;
     }
+    return -1;
 }
 
-Cellule_dict *trouveCouple(dictionnaire dict, PointImage cle) {
+Cellule_dict *trouveCouple(Dictionnaire *dict, PointImage cle) {
     Cellule_dict *curr = dict->tete;
     while(curr!=NULL){
         if(curr->cle.x==cle.x && curr->cle.y==cle.y){
@@ -119,11 +117,11 @@ void ajoutModifEntree(Dictionnaire *dict, PointImage cle,Pixel val){
     }
 }
 
-void detruireEntree (dictionnaire dict, Point cle){
+void detruireEntree (Dictionnaire *dict, PointImage cle){
     Cellule_dict *curr = dict->tete;
     Cellule_dict *aSuppr;
     if(curr==NULL) {
-        return NULL;
+        return;
     }
     while(curr!=NULL){
         if(curr->suivant->cle.x==cle.x && curr->suivant->cle.y==cle.y){
@@ -132,16 +130,16 @@ void detruireEntree (dictionnaire dict, Point cle){
         }
         curr = curr->suivant;
     }
-    if(curr!=NULL)free(aSuppr)
-    else printf("Clé introuvable et dictionnaire non modifié...")
+    if(curr!=NULL)free(aSuppr);
+    else printf("Clé introuvable et dictionnaire non modifié...");
 }
 
-Pixel popEntree (dictionnaire dict, Point cle){
+Pixel popEntree (Dictionnaire *dict, PointImage cle){
     Cellule_dict *curr = dict->tete;
     Cellule_dict *aSuppr;
     Pixel res;
     if(curr==NULL) {
-        return NULL;
+        return -1;
     }
     while(curr!=NULL){
         if(curr->suivant->cle.x==cle.x && curr->suivant->cle.y==cle.y){
@@ -161,14 +159,14 @@ Pixel popEntree (dictionnaire dict, Point cle){
 
 }
 
-PointImage recupXminYmin(dictionnaire dict){
+PointImage recupXminYmin(Dictionnaire *dict){
     Cellule_dict *curr = dict->tete;
     PointImage min;
     if(curr==NULL) {
         ERREUR_FATALE("Dictionnaire vide");
     }
-    min.x=curr->valeur.x;
-    min.y=curr->valeur.y;
+    min.x=curr->cle.x;
+    min.y=curr->cle.y;
     while(curr!=NULL){
         if(curr->cle.x<min.x)min.x=curr->cle.x;
         if(curr->cle.y<min.y)min.y=curr->cle.y;
@@ -177,14 +175,14 @@ PointImage recupXminYmin(dictionnaire dict){
     return min;
 }
 
-PointImage recupXmaxYmax(dictionnaire dict){
+PointImage recupXmaxYmax(Dictionnaire *dict){
     Cellule_dict *curr = dict->tete;
     PointImage max;
     if(curr==NULL) {
         ERREUR_FATALE("Dictionnaire vide");
     }
-    max.x=curr->valeur.x;
-    max.y=curr->valeur.y;
+    max.x=curr->cle.x;
+    max.y=curr->cle.y;
     while(curr!=NULL){
         if(curr->cle.x>max.x)max.x=curr->cle.x;
         if(curr->cle.y<max.y)max.y=curr->cle.y;
@@ -192,24 +190,27 @@ PointImage recupXmaxYmax(dictionnaire dict){
     }
     return max;
 }
-//Indice pixel 0<=x<=L-1 et 0<=y<=H-1
-void dictToImage(dictionnaire dict){
+
+///Indice pixel 0<=x<=L-1 et 0<=y<=H-1
+Image dictToImage(Dictionnaire *dict){
     Cellule_dict *curr = dict->tete;
     PointImage max = recupXmaxYmax(dict);
-    Image res = creer_image(max.x,max.y);
+    PointImage min = recupXminYmin(dict);
+    Image res = creer_image(max.x - min.x,max.y - min.y);
     while(curr!=NULL){
-        res.tab[curr->cle.x+curr->cle.y*max.x]=curr->valeur;
+        res.tab[( curr->cle.x - min.x )+ ( curr->cle.y - min.y )*max.x]=curr->valeur;
     }
+    return res;
 }
 
-TableauCoupleFlottant creerTableauCoordonnees(UINT L,UINT H){
+TableauCoupleFlottant *creerTableauCoordonnees(UINT L,UINT H){
     TableauCoupleFlottant *tab = (TableauCoupleFlottant*)malloc(sizeof(TableauCoupleFlottant));
     tab->L = L;
     tab->H = H;
     tab->tab = (Point2D *)malloc(sizeof(Point2D)*L*H);
 
     /* test si le tableau a ete correctement alloue */
-    if (I.tab == (Pixel *)NULL)
+    if (tab->tab == (Point2D *)NULL)
     {
         ERREUR_FATALE("Impossible de creer une image");
     }

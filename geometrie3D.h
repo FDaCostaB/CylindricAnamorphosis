@@ -6,6 +6,7 @@
 #define PAN431_GEOMETRIE3D_H
 
 #include <math.h>
+#include "types_erreur.h"
 
 typedef struct Point {
     double x , y , z ;

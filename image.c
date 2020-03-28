@@ -6,12 +6,11 @@
 #include<stdlib.h>
 #include<string.h>
 #include"image.h"
-#include "types_erreur.h"
 
-/* macro donnant l'indice d'un pixel de coordonn�es (_x,_y) de l'image _I */
-#define INDICE_PIXEL(_I,_x,_y) ((_x)-1)+(_I).L*((_y)-1)
+/// Macro donnant l'indice d'un pixel de coordonnées (_x,_y) de l'image _I
+#define INDICE_PIXEL(_I,_x,_y) ((_x))+(_I).L*((_y))
 
-/* cr�ation d'une image PBM de dimensions L x H avec tous les pixels blancs */
+/// Création d'une image PBM de dimensions L x H avec tous les pixels blancs
 Image creer_image(UINT L, UINT H)
 {
 	Image I;
@@ -36,7 +35,7 @@ Image creer_image(UINT L, UINT H)
 	return I;
 }
 
-/* suppression de l'image I = *p_I*/
+/// Suppression de l'image I = *p_I
 void supprimer_image(Image *p_I)
 {
 	free(p_I->tab);
@@ -44,8 +43,7 @@ void supprimer_image(Image *p_I)
 	p_I->H = 0;
 }
 
-/* renvoie la valeur du pixel (x,y) de l'image I
-   si (x,y) est hors de l'image la fonction renvoie BLANC */
+/// renvoie la valeur du pixel (x,y) de l'image I si (x,y) est hors de l'image la fonction renvoie BLANC
 Pixel get_pixel_image(Image I, int x, int y)
 {
 	if (x<1 || x>I.L || y<1 || y>I.H)
@@ -53,8 +51,7 @@ Pixel get_pixel_image(Image I, int x, int y)
 	return I.tab[INDICE_PIXEL(I,x,y)];
 }
 
-/* change la valeur du pixel (x,y) de l'image I avec la valeur v
-   si (x,y) est hors de l'image la fonction ne fait rien */
+/// Change la valeur du pixel (x,y) de l'image I avec la valeur v si (x,y) est hors de l'image la fonction ne fait rien
 void set_pixel_image(Image I, int x, int y, Pixel v)
 {
 	if (x<1 || x>I.L || y<1 || y>I.H)
@@ -62,13 +59,13 @@ void set_pixel_image(Image I, int x, int y, Pixel v)
 	I.tab[INDICE_PIXEL(I,x,y)] = v;
 }
 
-/* renvoie la largeur de l'image I */
+/// Renvoie la largeur de l'image I
 UINT largeur_image(Image I)
 {
 	return I.L;
 }
 
-/* renvoie la hauteur de l'image I */
+/// Renvoie la hauteur de l'image I
 UINT hauteur_image(Image I)
 {
 	return I.H;
@@ -149,10 +146,9 @@ void entete_fichier_pbm(FILE *f)
 	} while (boucle_ligne_commentaire);
 	
 }
-  
-/* lire l'image dans le fichier nomm� nom_f
-   s'il y a une erreur dans le fichier le programme s'arrete en affichant
-   un message */
+
+/// Lire l'image dans le fichier nommé nom_f s'il y a une erreur dans le fichier le programme s'arrete en affichant
+/// un message
 Image lire_fichier_image(char *nom_f)
 {
 	FILE *f;
@@ -220,7 +216,7 @@ Image lire_fichier_image(char *nom_f)
 	return I;
 }
 
-/* �crire l'image I � l'�cran */
+/// écrire l'image I dans le fichier f
 void ecrire_image(Image I,FILE *f){
   UINT L=largeur_image(I);
   UINT H=hauteur_image(I);
@@ -235,10 +231,11 @@ void ecrire_image(Image I,FILE *f){
   fprintf(f,"\n");
 }
 
+///Test si l'image est toute blanche
 bool est_vide(Image I){
   for (int j=1;j<=hauteur_image(I);j++){
     for (int i=1;i<=largeur_image(I);i++){
-      if (get_pixel_image(I,i,j)==1)
+      if (get_pixel_image(I,i,j)<255)
         return false;
     }
   }

@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include "geometrie3D.h"
 #include "image.h"
+#include "types_erreur.h"
 
 struct Cellule{
     Point P;
@@ -28,7 +29,7 @@ typedef struct cellule_dict {
 } Cellule_dict;
 
 typedef struct dictionnaire{
-    cellule_dict *tete;
+    Cellule_dict *tete;
     unsigned int taille;
 }Dictionnaire;
 
@@ -49,23 +50,23 @@ Cellule_dict* nouvelle_cellule_dict (void);
 
 Dictionnaire *nouveauDict (void) ;
 
-void afficherDict (dictionnaire dict);
+void afficherDict (Dictionnaire *dict);
 
-Pixel recupValeur (dictionnaire dict, PointImage cle);
+Pixel recupValeur (Dictionnaire *dict, PointImage cle);
 
-void ajoutModifEntree(dictionnaire dict, PointImage cle,Pixel val);
+void ajoutModifEntree(Dictionnaire *dict, PointImage cle,Pixel val);
 
-void detruireEntree (dictionnaire dict, PointImage cle);
+void detruireEntree (Dictionnaire *dict, PointImage cle);
 
-Pixel popEntree (dictionnaire dict, PointImage cle);
+Pixel popEntree (Dictionnaire *dict, PointImage cle);
 
-Pixel recupXminYmin(dictionnaire dict);
+PointImage recupXminYmin(Dictionnaire *dict);
 
-Pixel recupXmaxYmax(dictionnaire dict);
+PointImage recupXmaxYmax(Dictionnaire *dict);
 
-Image dictToImage(dictionnaire dict);
+Image dictToImage(Dictionnaire *dict);
 
-TableauCoupleFlottant creerTableauCoordonnees(void);
+TableauCoupleFlottant *creerTableauCoordonnees(UINT L,UINT H);
 
 
 #endif //INC_2ÈME_ANNÉE_LISTES_H

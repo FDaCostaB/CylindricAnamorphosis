@@ -3,7 +3,6 @@
 //
 
 #include "geometrie3D.h"
-#include "types_erreur.h"
 
 void affich_point(Point A){
     printf("Coordinates of the point : (%lf ; %lf ; %lf) \n",A.x,A.y,A.z);
