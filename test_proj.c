@@ -6,12 +6,13 @@
 #include "image.h"
 #include "geometrie3D.h"
 #include "types_erreur.h"
+#include <math.h>
 
 int main(int argc, char * argv[]){
 
     Point P; //starting position (image)
     Point V; //Viewer position
-    float r; //cylinder diameter
+    double r; //cylinder diameter
     FILE *f;
 
     if(argc != 3 ) ERREUR_FATALE("Utilisation commande : ./main fichier_image fichier_resultat\n");
@@ -19,6 +20,24 @@ int main(int argc, char * argv[]){
     if(f==NULL) ERREUR_FATALE("Impossible d'ouvrir le fichier résultat en écriture.\n");
 
     //Image vide = creer_image();
-    Image imageLu = lire_fichier_image(argv[1]);
-    ecrire_image(imageLu,f);
+    Image imageLue = lire_fichier_image(argv[1]);
+    ecrire_image(imageLue,f);
+
+    double L = (double)largeur_image(imageLue);
+    double H = (double)hauteur_image(imageLue);
+    P.x = 0;
+    P.y = (L-1)/2.0;
+    P.z = H-1;
+
+    V.x = sqrt(3)*H;
+    V.y = 0;
+    V.z = H;
+
+    r = 1.20 * L;
+
+    Vecteur N = vect_normal_intersect(P,V,r);
+
+    Vecteur R = reflexion_vect(vect_bipoint(P,V),N);
+
+    Point res = intersection_feuille(intersect_point_cylindre(P,V,r),R);
 }
