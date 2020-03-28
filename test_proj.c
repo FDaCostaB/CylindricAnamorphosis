@@ -25,19 +25,24 @@ int main(int argc, char * argv[]){
 
     double L = (double)largeur_image(imageLue);
     double H = (double)hauteur_image(imageLue);
+    printf("Hauteur = %lf et largeur = %lf\n",H,L);
     P.x = 0;
-    P.y = (L-1)/2.0;
+    P.y = -(L-1)/2.0;
     P.z = H-1;
 
-    V.x = sqrt(3)*H;
+    V.x = 5*H;
     V.y = 0;
-    V.z = H;
+    V.z = 3*H;
 
     r = 1.20 * L;
 
     Vecteur N = vect_normal_intersect(P,V,r);
 
     Vecteur R = reflexion_vect(vect_bipoint(P,V),N);
-
+    printf("vecteur R : ");
+    affich_vect(R);
     Point res = intersection_feuille(intersect_point_cylindre(P,V,r),R);
+
+    printf("res : ");
+    affich_point(res);
 }

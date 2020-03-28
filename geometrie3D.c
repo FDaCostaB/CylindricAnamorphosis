@@ -96,7 +96,8 @@ Vecteur vect_normal_intersect(Point P, Point V, double r) { // r est le diamètr
 }
 
 Vecteur proj_orthogonale(Vecteur V,Vecteur N){
-    double lambda = prod_scal(V,N) / norme(N) ;
+
+    double lambda = (prod_scal(V,N)) / (norme(N)*norme(N)) ;
     Vecteur proj = mult_scal(lambda,N) ;
     return proj;
 }
