@@ -15,13 +15,11 @@ int main(int argc, char * argv[]){
     double r; //cylinder diameter
     FILE *f;
 
-    if(argc != 3 ) ERREUR_FATALE("Utilisation commande : ./main fichier_image fichier_resultat\n");
+    if(argc != 2 ) ERREUR_FATALE("Utilisation commande : ./main fichier_image \n");
     f = fopen(argv[2],"w");
     if(f==NULL) ERREUR_FATALE("Impossible d'ouvrir le fichier résultat en écriture.\n");
 
-    //Image vide = creer_image();
     Image imageLue = lire_fichier_image(argv[1]);
-    ecrire_image(imageLue,f);
 
     double L = (double)largeur_image(imageLue);
     double H = (double)hauteur_image(imageLue);
