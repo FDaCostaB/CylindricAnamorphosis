@@ -39,10 +39,9 @@ int main(int argc, char * argv[]){
     Vecteur N = vect_normal_intersect(P,V,r);
 
     Vecteur R = reflexion_vect(vect_bipoint(P,V),N);
-    printf("vecteur R : ");
-    affich_vect(R);
+
     Point res = intersection_feuille(intersect_point_cylindre(P,V,r),R);
 
-    printf("res : ");
+    printf("Le point projeté est : ");
     affich_point(res);
 }

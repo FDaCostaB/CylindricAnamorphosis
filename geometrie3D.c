@@ -5,11 +5,11 @@
 #include "geometrie3D.h"
 
 void affich_point(Point A){
-    printf("Coordinates of the point : (%lf ; %lf ; %lf) \n",A.x,A.y,A.z);
+    printf("(%lf ; %lf ; %lf) \n",A.x,A.y,A.z);
 }
 
 void affich_vect(Vecteur A){
-    printf("Coordinates of the vector : (%lf ; %lf ; %lf) \n",A.x,A.y,A.z);
+    printf("(%lf ; %lf ; %lf) \n",A.x,A.y,A.z);
 }
 
 Point set_point(double x, double y, double z){
