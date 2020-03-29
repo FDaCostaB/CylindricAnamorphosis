@@ -15,7 +15,7 @@ int main(int argc, char * argv[]){
     Point V; //Viewer position
     double r; //cylinder diameter
 
-    if(argc != 2 ) ERREUR_FATALE("Utilisation commande : ./main fichier_image \n");
+    if(argc != 3 ) ERREUR_FATALE("Utilisation commande : ./main fichier_image fichier_résultat\n");
 
     Image imageLue = lire_fichier_image(argv[1]);
 
@@ -31,9 +31,17 @@ int main(int argc, char * argv[]){
     V.z = 3*H;
 
     r = 1.20 * L;
-    
+
     TableauCoupleFlottant *T = creerTableauCoordonnees(L,H);
     remplissage_tableau_proj(T,P,V,r);
 
+    Dictionnaire *dict;
+    dict = pixelisationResultat(T,imageLue);
 
+    Image image_modifiee;
+    image_modifiee = dictToImage(dict);
+
+    ecrire_image(image_modifiee,argv[2]);
+
+    printf("Creation of the new image finished. Open %c to see the result (if it doesn't look like anything, it's successful !).",argv[2]);
 }
