@@ -37,7 +37,7 @@ INCLUDEOPTS = -I$(INCDIR)
 COMPILOPTS = -g -Wall $(INCLUDEOPTS)
 
 # liste des executables
-EXECUTABLES = test test_dico test_proj
+EXECUTABLES = test test_dico test_proj test_pixelisation cylindricAnamorphosis
 
 
 #############################################################################
@@ -72,14 +72,28 @@ projection.o : projection.c projection.h geometrie3d.h
 # regles explicites de creation des executables        #
 ########################################################
 
-test_dico.o : test_dico.c image.h listes.h geometrie3d.h
+test_dico.o : test_dico.c image.h listes.h geometrie3d.h projection.h
 	@echo ""
 	@echo "---------------------------------------------"
 	@echo "Compilation du module "$*
 	@echo "---------------------------------------------"
 	$(CC) -c $(COMPILOPTS) $<
 
-test_proj.o : test_proj.c image.h listes.h geometrie3d.h
+test_proj.o : test_proj.c image.h listes.h geometrie3d.h projection.h
+	@echo ""
+	@echo "---------------------------------------------"
+	@echo "Compilation du module "$*
+	@echo "---------------------------------------------"
+	$(CC) -c $(COMPILOPTS) $<
+	
+test_pixelisation.o : test_pixelisation.c image.h listes.h geometrie3d.h projection.h
+	@echo ""
+	@echo "---------------------------------------------"
+	@echo "Compilation du module "$*
+	@echo "---------------------------------------------"
+	$(CC) -c $(COMPILOPTS) $<
+
+cylindricAnamorphosis.o : cylindricAnamorphosis.c image.h listes.h geometrie3d.h projection.h
 	@echo ""
 	@echo "---------------------------------------------"
 	@echo "Compilation du module "$*
@@ -101,6 +115,20 @@ test_dico: test_dico.o image.o geometrie3d.o listes.o
 	$(CC) $^ $(LDOPTS) -o $@
 
 test_proj: test_proj.o image.o geometrie3d.o listes.o projection.o
+	@echo ""
+	@echo "---------------------------------------------"
+	@echo "Creation de l'executable "$@
+	@echo "---------------------------------------------"
+	$(CC) $^ $(LDOPTS) -o $@
+	
+test_pixelisation: test_pixelisation.o image.o geometrie3d.o listes.o projection.o
+	@echo ""
+	@echo "---------------------------------------------"
+	@echo "Creation de l'executable "$@
+	@echo "---------------------------------------------"
+	$(CC) $^ $(LDOPTS) -o $@
+	
+cylindricAnamorphosis: cylindricAnamorphosis.o image.o geometrie3d.o listes.o projection.o
 	@echo ""
 	@echo "---------------------------------------------"
 	@echo "Creation de l'executable "$@

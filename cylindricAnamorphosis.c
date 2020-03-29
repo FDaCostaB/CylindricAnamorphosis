@@ -14,10 +14,10 @@ int main(int argc, char * argv[]){
     Point P; //starting position (image)
     Point V; //Viewer position
     double r; //cylinder diameter
-    File *res;
+    FILE *res;
 
     if(argc != 3 ) ERREUR_FATALE("Utilisation commande : ./main fichier_image fichier_résultat\n");
-    res = fopen(argv[2]);
+    res = fopen(argv[2],"w");
     if(res == NULL) ERREUR_FATALE("Fichier resultat compromis");
 
     Image imageLue = lire_fichier_image(argv[1]);
@@ -46,5 +46,5 @@ int main(int argc, char * argv[]){
 
     ecrire_image(image_modifiee,res);
 
-    printf("Creation of the new image finished. Open %c to see the result (if it doesn't look like anything, it's successful !).",argv[2]);
+    printf("Creation of the new image finished. Open %s to see the result (if it doesn't look like anything, it's successful !).",argv[2]);
 }
