@@ -42,12 +42,7 @@ void remplissage_tableau_proj(TableauCoupleFlottant *T, Point P, Point V, double
             E.x = res.x;
             E.y = res.y;
             T->tab[j+i*T->L] = E;
-            if (j==(L-1)){
-                if (i==(H-1)){
-                    affich_point_2D(T->tab[j + i * T->L]);
-                    affich_point(P);
-                }
-            }
+
             P.y += 1;
         }
         P.z -=1;
