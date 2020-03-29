@@ -7,6 +7,7 @@
 
 #include <stdbool.h>
 #include "types_erreur.h"
+#include "listes.h"
 
 /// Type entier positif
 typedef unsigned int UINT;
@@ -62,4 +63,7 @@ void ecrire_image(Image I,FILE *f);
 
 ///Test si l'image est toute blanche
 bool est_vide(Image I);
+
+Dictionnaire *pixelisationResultat(TableauCoupleFlottant* Proj);
+
 #endif /* _IMAGE_H_ */

@@ -28,7 +28,7 @@ void ajoute_queue(Sequence *S, Point Pcurr) {
 }
 
 
-void afficher (Sequence* seq)
+void afficher (SequencePix* seq)
 {
     Cellule *curr;
     curr = seq->tete;
@@ -40,13 +40,13 @@ void afficher (Sequence* seq)
 }
 
 Cellule* nouvelleCellule (void){
-    Cellule *cel =(Cellule*)malloc(sizeof(Cellule));
+    CellulePix *cel =(CellulePix*)malloc(sizeof(CellulePix));
     cel->suivant = NULL;
     return cel;
 }
 
 
-void detruireCellule (Cellule* cel){
+void detruireCellule (CellulePix* cel){
     free(cel);
 }
 

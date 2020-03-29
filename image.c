@@ -241,3 +241,5 @@ bool est_vide(Image I){
   }
   return true;
 }
+
+Dictionnaire *pixelisationResultat(TableauCoupleFlottant* Proj);

@@ -10,22 +10,22 @@
 #include "image.h"
 #include "types_erreur.h"
 
-struct Cellule{
-    Point P;
+struct CellulePix{
+    Pixel P;
     struct Cellule *suivant;
 };
-typedef struct Cellule Cellule;
+typedef struct Cellule CellulePix;
 
-struct Sequence{
+struct SequencePix{
     Cellule *tete;
     unsigned int taille;
 };
-typedef struct Sequence Sequence;
+typedef struct Sequence SequencePix;
 
 typedef struct cellule_dict {
     struct cellule_dict *suivant;
     PointImage cle;
-    Pixel valeur;
+    SequencePix valeur;
 } Cellule_dict;
 
 typedef struct dictionnaire{
@@ -42,9 +42,11 @@ void afficher (Sequence* seq);
 
 void ajoute_queue(Sequence *l, Point n);
 
-Cellule* nouvelleCellule (void);
+CellulePix* nouvelleCellule (void);
 
-void detruireCellule (Cellule*);
+void detruireCellule (CellulePix*);
+
+void detruireSequencePix (SequencePix*);
 
 Cellule_dict* nouvelle_cellule_dict (void);
 
