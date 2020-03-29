@@ -14,8 +14,11 @@ int main(int argc, char * argv[]){
     Point P; //starting position (image)
     Point V; //Viewer position
     double r; //cylinder diameter
+    File *res;
 
     if(argc != 3 ) ERREUR_FATALE("Utilisation commande : ./main fichier_image fichier_résultat\n");
+    res = fopen(argv[2]);
+    if(res == NULL) ERREUR_FATALE("Fichier resultat compromis");
 
     Image imageLue = lire_fichier_image(argv[1]);
 
@@ -36,12 +39,12 @@ int main(int argc, char * argv[]){
     remplissage_tableau_proj(T,P,V,r);
 
     Dictionnaire *dict;
-    dict = pixelisationResultat(T,imageLue);
+    dict = pixelisationResultat(T,&imageLue);
 
     Image image_modifiee;
     image_modifiee = dictToImage(dict);
 
-    ecrire_image(image_modifiee,argv[2]);
+    ecrire_image(image_modifiee,res);
 
     printf("Creation of the new image finished. Open %c to see the result (if it doesn't look like anything, it's successful !).",argv[2]);
 }

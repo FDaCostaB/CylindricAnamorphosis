@@ -53,29 +53,43 @@ void remplissage_tableau_proj(TableauCoupleFlottant *T, Point P, Point V, double
 void pixelisationPoint(TableauCoupleFlottant* Proj, Dictionnaire *res, int x, int y, Pixel val){
     Point2D min;
     Point2D max;
+    PointImage minInt;
+    PointImage maxInt;
 
     min.x = Proj->tab[ (x) + (y) * Proj->L].x;
     min.y = Proj->tab[ (x) + (y) * Proj->L].y;
     max.x = Proj->tab[ (x) + (y) * Proj->L].x;
     max.y = Proj->tab[ (x) + (y) * Proj->L].y;
 
-    for(int i = x; i <= x+1; x++){
-        for(int j = y; j <= y+1; y++){
+    for(int i = x; i <= x+1; i++){
+        for(int j = y; j <= y+1; j++){
             if(Proj->tab[ i + j * Proj->L ].x < min.x) min.x = Proj->tab[ i + j * Proj->L].x ;
             if(Proj->tab[ i + j * Proj->L ].x > max.x) max.x = Proj->tab[ i + j * Proj->L].x ;
             if(Proj->tab[ i + j * Proj->L ].y < min.y) min.y = Proj->tab[ i + j * Proj->L].y ;
             if(Proj->tab[ i + j * Proj->L ].y > max.y) max.y = Proj->tab[ i + j * Proj->L].y ;
         }
     }
-    PointImage minInt = { (int) min.x , (int) min.y };
-    PointImage maxInt = { (int) max.x + 1 , (int) max.y + 1 };
+    if(min.x>=0 && min.y>=0) minInt = (PointImage) { (int) min.x , (int) min.y  };
+    if(min.x<0 && min.y>=0) minInt = (PointImage) { (int) min.x - 1 , (int) min.y  };
+    if(min.x>=0 && min.y<0) minInt = (PointImage) { (int) min.x , (int) min.y - 1 };
+    if(min.x<0 && min.y<0) minInt = (PointImage) { (int) min.x - 1 , (int) min.y -1 };
 
+    if(max.x>=0 && max.y>=0) maxInt = (PointImage) { (int) max.x + 1 , (int) max.y + 1 };
+    if(max.x<0 && max.y>=0) maxInt = (PointImage) { (int) max.x , (int) max.y +1  };
+    if(max.x>=0 && max.y<0) maxInt = (PointImage) { (int) max.x +1 , (int) max.y };
+    if(max.x<0 && max.y<0) maxInt = (PointImage) { (int) max.x , (int) max.y };
+
+    for(int i = x; i <= x+1; i++) {
+        for (int j = y; j <= y + 1; j++) {
+            printf("(%f , %f) , ", Proj->tab[ i + j * Proj->L ].x, Proj->tab[ i + j * Proj->L ].y);
+        }
+    }
+    printf("\nMin : ( %d , %d) , Max : ( %d , %d)\n",minInt.x,minInt.y,maxInt.x,maxInt.y);
     for(int i = minInt.x; i < maxInt.x; i++){
         for(int j = minInt.y; j < maxInt.y; j++){
             ajoutModifEntree(res, (PointImage) {i,j}, val);
         }
     }
-    return;
 }
 
 Dictionnaire *pixelisationResultat(TableauCoupleFlottant* Proj, Image *image){
