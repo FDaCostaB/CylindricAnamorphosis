@@ -32,6 +32,7 @@ void ajoute_queue(SequencePix *S, Pixel P) {
 void afficher (SequencePix* seq)
 {
     CellulePix *curr;
+    if(seq==NULL) return;
     curr = seq->tete;
     printf("[ ");
     while(curr != NULL){
@@ -265,6 +266,7 @@ Image dictToImage(Dictionnaire *dict){
 Pixel moyenneSeqPix(SequencePix * seq){
     int taille = 0;
     double moyenne = 0;
+    if(seq==NULL) return 0;
     CellulePix *curr = seq->tete;
     while(curr!=NULL){
         moyenne += curr->P;

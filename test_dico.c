@@ -187,6 +187,64 @@ int main(int argc, char * argv[]){
     minMax = recupXminYmin(dico);
     printf("( %d, %d )\n",minMax.x, minMax.y);
 
+    printf("\n###########################\n Test detruireDico \n###########################\n");
+    detruireDico(dico);
+    dico=nouveauDict();
+    afficherDict(dico);
+
+    printf("\n###########################\n Test moyenneSeqPix \n###########################\n");
+
+    Pixel res;
+
+    ajoutModifEntree(dico, D, 0);ajoutModifEntree(dico, D, 0);ajoutModifEntree(dico, D, 0);ajoutModifEntree(dico, D, 0);
+    ajoutModifEntree(dico, D, 0);ajoutModifEntree(dico, D, 0);ajoutModifEntree(dico, D, 0);ajoutModifEntree(dico, D, 0);
+
+    ajoutModifEntree(dico, C, 15);ajoutModifEntree(dico, C, 78);ajoutModifEntree(dico, C, 22);ajoutModifEntree(dico, C, 255);
+
+    ajoutModifEntree(dico, B, 255);ajoutModifEntree(dico, B, 255);ajoutModifEntree(dico, B, 255);
+
+    ajoutModifEntree(dico, A, 75);ajoutModifEntree(dico, A, 184);
+
+    afficherDict(dico);
+
+    p = popEntree(dico,D);
+    res = moyenneSeqPix(p);
+    afficher(p);
+    printf("Moyenne : %d \n\n",res);
+
+    p = popEntree(dico,C);
+    res = moyenneSeqPix(p);
+    afficher(p);
+    printf("Moyenne : %d \n\n",res);
+
+    p = popEntree(dico,B);
+    res = moyenneSeqPix(p);
+    afficher(p);
+    printf("Moyenne : %d \n\n",res);
+
+    p = popEntree(dico,A);
+    res =moyenneSeqPix(p);
+    afficher(p);
+    printf("Moyenne : %d \n\n",res);
+
+    ajoutModifEntree(dico, C, 0);
+
+    p = popEntree(dico,C);
+    res = moyenneSeqPix(p);
+    afficher(p);
+    printf("Moyenne : %d \n\n",res);
+
+    p = popEntree(dico,D);
+    res = moyenneSeqPix(p);
+    afficher(p);
+    printf("Moyenne : %d \n\n",res);
+
+    ajoutModifEntree(dico, B, 214);ajoutModifEntree(dico, B, 168);ajoutModifEntree(dico, B, 3);
+
+    p = popEntree(dico,B);
+    res = moyenneSeqPix(p);
+    afficher(p);
+    printf("Moyenne : %d \n\n",res);
 
     /* NON TESTE
      *

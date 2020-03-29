@@ -72,11 +72,11 @@ PointImage recupXminYmin(Dictionnaire *dict);
 
 PointImage recupXmaxYmax(Dictionnaire *dict);
 
-//NON TESTE
-Image dictToImage(Dictionnaire *dict);
-
 Pixel moyenneSeqPix(SequencePix * seq);
 
 TableauCoupleFlottant *creerTableauCoordonnees(UINT L,UINT H);
+
+//NON TESTE
+Image dictToImage(Dictionnaire *dict);
 
 #endif //INC_2ÈME_ANNÉE_LISTES_H
