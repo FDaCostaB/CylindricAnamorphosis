@@ -7,8 +7,6 @@
 #include<string.h>
 #include"image.h"
 
-/// Macro donnant l'indice d'un pixel de coordonnées (_x,_y) de l'image _I
-#define INDICE_PIXEL(_I,_x,_y) ((_x))+(_I).L*((_y))
 
 /// Création d'une image PBM de dimensions L x H avec tous les pixels blancs
 Image creer_image(UINT L, UINT H)
@@ -243,3 +241,7 @@ bool est_vide(Image I){
 }
 
 Dictionnaire *pixelisationResultat(TableauCoupleFlottant* Proj);
+=======
+void affich_point_2D(Point2D A){
+    printf("(%lf ; %lf) \n",A.x,A.y);
+}

@@ -7,6 +7,8 @@
 
 #include <math.h>
 #include "types_erreur.h"
+#include "image.h"
+
 
 typedef struct Point {
     double x , y , z ;

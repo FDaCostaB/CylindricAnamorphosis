@@ -236,8 +236,7 @@ TableauCoupleFlottant *creerTableauCoordonnees(UINT L,UINT H){
     tab->tab = (Point2D *)malloc(sizeof(Point2D)*L*H);
 
     /* test si le tableau a ete correctement alloue */
-    if (tab->tab == (Point2D *)NULL)
-    {
+    if (tab->tab == (Point2D *)NULL){
         ERREUR_FATALE("Impossible de creer une image");
     }
 

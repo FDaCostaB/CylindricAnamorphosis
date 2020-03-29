@@ -20,5 +20,22 @@ int main(int argc, char * argv[]){
 
     //Image vide = creer_image();
     Image imageLue = lire_fichier_image(argv[1]);
-    ecrire_image(imageLue,f);
+
+    double L = (double)largeur_image(imageLue);
+    double H = (double)hauteur_image(imageLue);
+
+    printf("Hauteur = %lf et largeur = %lf\n",H,L);
+    P.x = 0;
+    P.y = -(L-1)/2.0;
+    P.z = H-1;
+
+    V.x = 5*H;
+    V.y = 0;
+    V.z = 3*H;
+
+    r = 1.20 * L;
+
+    TableauCoupleFlottant *T = creerTableauCoordonnees(L,H);
+
+
 }
