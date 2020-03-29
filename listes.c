@@ -3,6 +3,7 @@
 //
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "listes.h"
 
 void ajoute_queue(SequencePix *S, Pixel P) {
@@ -255,15 +256,30 @@ Image dictToImage(Dictionnaire *dict){
     PointImage min = recupXminYmin(dict);
     Image res = creer_image(max.x - min.x,max.y - min.y);
     while(curr!=NULL){
-        //res.tab[( curr->cle.x - min.x )+ ( curr->cle.y - min.y )*max.x]=moyenneSeqPix(curr->valeur);
+        res.tab[( curr->cle.x - min.x ) + ( curr->cle.y - min.y ) * (max.x - min.x + 1) ]=moyenneSeqPix(curr->valeur);
+        curr = curr->suivant;
     }
     return res;
 }
 
+Pixel moyenneSeqPix(SequencePix * seq){
+    int taille = 0;
+    double moyenne = 0;
+    CellulePix *curr = seq->tete;
+    while(curr!=NULL){
+        moyenne += curr->P;
+        taille++;
+        curr = curr->suivant;
+    }
+    moyenne = (double)moyenne / (double)taille;
+
+    return (int)round(moyenne);
+}
+
 TableauCoupleFlottant *creerTableauCoordonnees(UINT L,UINT H){
     TableauCoupleFlottant *tab = (TableauCoupleFlottant*)malloc(sizeof(TableauCoupleFlottant));
-    tab->L = L;
-    tab->H = H;
+    tab->L = L+1;
+    tab->H = H+1;
     tab->tab = (Point2D *)malloc(sizeof(Point2D)*(L+1)*(H+1));
 
     /* test si le tableau a ete correctement alloue */

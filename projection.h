@@ -12,9 +12,10 @@
 ///Renvoie la projection du point P
 Point projection_point(Point P,Point V,double r);
 
-
 void remplissage_tableau_proj(TableauCoupleFlottant *T, Point P, Point V, double r);
 
-Dictionnaire *pixelisationResultat(TableauCoupleFlottant* Proj);
+void pixelisationPoint(TableauCoupleFlottant* Proj, Dictionnaire *res, int x, int y, Pixel val);
+
+Dictionnaire *pixelisationResultat(TableauCoupleFlottant* Proj, Image *image);
 
 #endif //PAN431_PROJECTION_H
