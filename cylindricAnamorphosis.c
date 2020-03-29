@@ -31,13 +31,7 @@ int main(int argc, char * argv[]){
     V.z = 3*H;
 
     r = 1.20 * L;
-
-    //Vecteur N = vect_normal_intersect(P,V,r);
-
-    //Vecteur R = reflexion_vect(vect_bipoint(P,V),N);
-
-    //Point res = intersection_feuille(intersect_point_cylindre(P,V,r),R);
-
+    
     TableauCoupleFlottant *T = creerTableauCoordonnees(L,H);
     remplissage_tableau_proj(T,P,V,r);
 
