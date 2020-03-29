@@ -37,12 +37,16 @@ int main(int argc, char * argv[]){
 
     TableauCoupleFlottant *T = creerTableauCoordonnees(L,H);
     remplissage_tableau_proj(T,P,V,r);
+    printf("Projection terminée\n");
 
-    Dictionnaire *dict;
+    Dictionnaire *dict = nouveauDict();
     dict = pixelisationResultat(T,&imageLue);
+    printf("Pixelisation terminée\n");
+    afficherDict(dict);
 
     Image image_modifiee;
     image_modifiee = dictToImage(dict);
+    printf("Transformation en image terminée\n");
 
     ecrire_image(image_modifiee,res);
 

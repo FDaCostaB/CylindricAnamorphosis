@@ -79,12 +79,12 @@ void pixelisationPoint(TableauCoupleFlottant* Proj, Dictionnaire *res, int x, in
     if(max.x>=0 && max.y<0) maxInt = (PointImage) { (int) max.x +1 , (int) max.y };
     if(max.x<0 && max.y<0) maxInt = (PointImage) { (int) max.x , (int) max.y };
 
-    for(int i = x; i <= x+1; i++) {
+    /*for(int i = x; i <= x+1; i++) {
         for (int j = y; j <= y + 1; j++) {
             printf("(%f , %f) , ", Proj->tab[ i + j * Proj->L ].x, Proj->tab[ i + j * Proj->L ].y);
         }
     }
-    printf("\nMin : ( %d , %d) , Max : ( %d , %d)\n",minInt.x,minInt.y,maxInt.x,maxInt.y);
+    printf("\nMin : ( %d , %d) , Max : ( %d , %d)\n",minInt.x,minInt.y,maxInt.x,maxInt.y);*/
     for(int i = minInt.x; i < maxInt.x; i++){
         for(int j = minInt.y; j < maxInt.y; j++){
             ajoutModifEntree(res, (PointImage) {i,j}, val);
@@ -98,6 +98,7 @@ Dictionnaire *pixelisationResultat(TableauCoupleFlottant* Proj, Image *image){
         for(int x = 0; x < image->L; x++){
             pixelisationPoint(Proj, res, x, y, image->tab[ x + (y * image->L) ]);
         }
+        printf("Ligne : %d\n",y);
     }
     return res;
 }
