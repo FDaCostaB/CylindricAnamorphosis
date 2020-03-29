@@ -31,6 +31,7 @@ void remplissage_tableau_proj(TableauCoupleFlottant *T, Point P, Point V, double
 
     UINT L = (T->L) - 1; //J'ai modifié creerTableauCoordonnees(L,H) il crée un tableau de (L+1) * (H+1)
     UINT H = (T->H) - 1; // L pixel il y a L+1 point sur une ligne. De même pour la colonne donc j'ai ajusté ici.
+                         // Donc ici l=xmax et h= ymax et j'ai laissé les "<=" plus bas
     double val = P.y;
 
     for (int i=0;i<=H;i++){
