@@ -7,14 +7,10 @@
 
 #include <stdbool.h>
 #include "types_erreur.h"
-<<<<<<< HEAD
-#include "listes.h"
-=======
 #include "geometrie3D.h"
 
 /// Macro donnant l'indice d'un pixel de coordonnées (_x,_y) de l'image _I
 #define INDICE_PIXEL(_I,_x,_y) ((_x))+(_I).L*((_y))
->>>>>>> 1d220b549950ca65ac00797f75179bcd20791234
 
 /// Type entier positif
 typedef unsigned int UINT;
@@ -71,10 +67,6 @@ void ecrire_image(Image I,FILE *f);
 ///Test si l'image est toute blanche
 bool est_vide(Image I);
 
-<<<<<<< HEAD
-Dictionnaire *pixelisationResultat(TableauCoupleFlottant* Proj);
-=======
 void affich_point_2D(Point2D A);
->>>>>>> 1d220b549950ca65ac00797f75179bcd20791234
 
 #endif /* _IMAGE_H_ */

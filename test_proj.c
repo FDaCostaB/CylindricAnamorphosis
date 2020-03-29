@@ -24,7 +24,7 @@ int main(int argc, char * argv[]){
     printf("Hauteur = %lf et largeur = %lf\n",H,L);
     P.x = 0;
     P.y = -L/2.0;
-    P.z = H-1;
+    P.z = H;
 
     V.x = 5*H;
     V.y = 0;

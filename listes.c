@@ -5,11 +5,11 @@
 #include <stdlib.h>
 #include "listes.h"
 
-void ajoute_queue(Sequence *S, Point Pcurr) {
-    Cellule *curr;
-    Cellule *c;
-    c = (Cellule *) malloc(sizeof(Cellule));
-    c->P = Pcurr;
+void ajoute_queue(SequencePix *S, Pixel P) {
+    CellulePix *curr;
+    CellulePix *c;
+    c = (CellulePix *) malloc(sizeof(CellulePix));
+    c->P = P;
     c->suivant=NULL;
     if (S->tete==NULL) {
         S->tete=c;
@@ -30,16 +30,18 @@ void ajoute_queue(Sequence *S, Point Pcurr) {
 
 void afficher (SequencePix* seq)
 {
-    Cellule *curr;
+    CellulePix *curr;
     curr = seq->tete;
+    printf("[ ");
     while(curr != NULL){
-        affich_point(curr->P);
+        if(curr->suivant != NULL)printf("%d ,", curr->P);
+        else printf("%d ]", curr->P);
         curr = curr->suivant;
     }
 
 }
 
-Cellule* nouvelleCellule (void){
+CellulePix* nouvelleCellule (void){
     CellulePix *cel =(CellulePix*)malloc(sizeof(CellulePix));
     cel->suivant = NULL;
     return cel;
@@ -48,6 +50,19 @@ Cellule* nouvelleCellule (void){
 
 void detruireCellule (CellulePix* cel){
     free(cel);
+}
+
+void detruireSequencePix (SequencePix* seq){
+    CellulePix *curr = seq->tete;
+    CellulePix *aSuppr;
+    while(curr != NULL){
+        aSuppr = curr;
+        curr = curr->suivant;
+        detruireCellule(aSuppr);
+    }
+    seq->tete=NULL;
+    seq->taille=0;
+    free(seq);
 }
 
 Cellule_dict* nouvelle_cellule_dict (){
@@ -63,6 +78,13 @@ Dictionnaire *nouveauDict (void){
     return dict;
 }
 
+SequencePix * nouvelleSequencePix (void){
+    SequencePix * seq = (SequencePix*)malloc(sizeof(SequencePix));
+    seq->taille=0;
+    seq->tete=NULL;
+    return seq;
+}
+
 void afficherDict (Dictionnaire *dict){
     Cellule_dict *curr = dict->tete;
     if(curr==NULL) {
@@ -71,16 +93,20 @@ void afficherDict (Dictionnaire *dict){
         printf("{ ");
         while(curr!=NULL){
             if(curr->suivant==NULL){
-                printf(" ( %d, %d ) : %d }\n", curr->cle.x, curr->cle.y, curr->valeur);
+                printf(" ( %d, %d ) : ", curr->cle.x, curr->cle.y);
+                afficher(curr->valeur);
+                printf(" }\n\n");
             }else{
-                printf(" ( %d, %d ) : %d,", curr->cle.x, curr->cle.y, curr->valeur);
+                printf(" ( %d, %d ) :", curr->cle.x, curr->cle.y);
+                afficher(curr->valeur);
+                printf(" ,\n");
             }
             curr = curr->suivant;
         }
     }
 }
 
-Pixel recupValeur (Dictionnaire *dict, PointImage cle){
+SequencePix *recupValeur (Dictionnaire *dict, PointImage cle){
     Cellule_dict *curr = dict->tete;
     while(curr!=NULL){
         if(curr->cle.x==cle.x && curr->cle.y==cle.y){
@@ -88,7 +114,7 @@ Pixel recupValeur (Dictionnaire *dict, PointImage cle){
         }
         curr = curr->suivant;
     }
-    return -1;
+    return NULL;
 }
 
 Cellule_dict *trouveCouple(Dictionnaire *dict, PointImage cle) {
@@ -105,12 +131,13 @@ Cellule_dict *trouveCouple(Dictionnaire *dict, PointImage cle) {
 void ajoutModifEntree(Dictionnaire *dict, PointImage cle,Pixel val){
     Cellule_dict *res =trouveCouple(dict,cle);
     if(res!=NULL){
-        res->valeur=val;
+        ajoute_queue(res->valeur,val);
     }else{
         Cellule_dict *nouv = nouvelle_cellule_dict();
         nouv->cle.x=cle.x;
         nouv->cle.y=cle.y;
-        nouv->valeur=val;
+        nouv->valeur=nouvelleSequencePix();
+        ajoute_queue(nouv->valeur,val);
         nouv->suivant = dict->tete;
         dict->tete=nouv;
         dict->taille ++;
@@ -126,6 +153,7 @@ void detruireEntree (Dictionnaire *dict, PointImage cle){
     if(curr->cle.x==cle.x && curr->cle.y==cle.y){
         aSuppr=curr;
         dict->tete=curr->suivant;
+        detruireSequencePix(aSuppr->valeur);
         free(aSuppr);
         return;
     }
@@ -136,7 +164,10 @@ void detruireEntree (Dictionnaire *dict, PointImage cle){
         }
         curr = curr->suivant;
     }
-    if(aSuppr!=NULL)free(aSuppr);
+    if(aSuppr!=NULL){
+        detruireSequencePix(aSuppr->valeur);
+        free(aSuppr);
+    }
     else printf("Clé introuvable et dictionnaire non modifié...");
 }
 
@@ -153,12 +184,12 @@ void detruireDico (Dictionnaire *dict) {
     }
 }
 
-Pixel popEntree (Dictionnaire *dict, PointImage cle){
+SequencePix *popEntree (Dictionnaire *dict, PointImage cle){
     Cellule_dict *curr = dict->tete;
     Cellule_dict *aSuppr = NULL;
-    Pixel res;
+    SequencePix *res;
     if(curr==NULL) {
-        return -1;
+        return NULL;
     }
     if(curr->cle.x==cle.x && curr->cle.y==cle.y){
         aSuppr=curr;
@@ -224,7 +255,7 @@ Image dictToImage(Dictionnaire *dict){
     PointImage min = recupXminYmin(dict);
     Image res = creer_image(max.x - min.x,max.y - min.y);
     while(curr!=NULL){
-        res.tab[( curr->cle.x - min.x )+ ( curr->cle.y - min.y )*max.x]=curr->valeur;
+        //res.tab[( curr->cle.x - min.x )+ ( curr->cle.y - min.y )*max.x]=moyenneSeqPix(curr->valeur);
     }
     return res;
 }
@@ -233,7 +264,7 @@ TableauCoupleFlottant *creerTableauCoordonnees(UINT L,UINT H){
     TableauCoupleFlottant *tab = (TableauCoupleFlottant*)malloc(sizeof(TableauCoupleFlottant));
     tab->L = L;
     tab->H = H;
-    tab->tab = (Point2D *)malloc(sizeof(Point2D)*L*H);
+    tab->tab = (Point2D *)malloc(sizeof(Point2D)*(L+1)*(H+1));
 
     /* test si le tableau a ete correctement alloue */
     if (tab->tab == (Point2D *)NULL){

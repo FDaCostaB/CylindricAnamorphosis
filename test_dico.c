@@ -12,7 +12,7 @@ int main(int argc, char * argv[]){
     //Dictionnaire *nouveauDict (void) ;
     Dictionnaire * dico;
     dico = nouveauDict();
-    Pixel p;
+    SequencePix *p;
     Cellule_dict *cell = nouvelle_cellule_dict() ;
     PointImage minMax = {0,0};
 
@@ -37,32 +37,51 @@ int main(int argc, char * argv[]){
     //Pixel recupValeur (Dictionnaire *dict, PointImage cle);
     printf("\n###########################\n Test recupValeur \n###########################\n");
     p = recupValeur(dico,B);
-    printf("( %d, %d ) : %d \n",B.x,B.y,p);
+    printf("( %d, %d ) : ",B.x,B.y);
+    afficher(p);
+    printf("\n");
 
     p = recupValeur(dico,Inconnu);
-    printf("( %d, %d ) : %d \n",Inconnu.x,Inconnu.y,p);
+    if(p!=NULL){
+        printf("( %d, %d ) : ",Inconnu.x,Inconnu.y);
+        afficher(p);
+        printf("\n");
+    }else{
+        printf("-1\n");
+    }
+
 
     p = recupValeur(dico,A);
-    printf("( %d, %d ) : %d \n",A.x,A.y,p);
+    printf("( %d, %d ) : ",A.x,A.y);
+    afficher(p);
+    printf("\n");
 
     p = recupValeur(dico,D);
-    printf("( %d, %d ) : %d \n",D.x,D.y,p);
+    printf("( %d, %d ) : ",D.x,D.y);
+    afficher(p);
+    printf("\n");
 
     //Cellule_dict *trouveCouple(Dictionnaire *dict, PointImage cle)
     printf("\n###########################\n Test trouveCouple \n###########################\n");
 
     cell = trouveCouple(dico,B);
-    printf("( %d, %d ) : %d \n",cell->cle.x,cell->cle.y,cell->valeur);
+    printf("( %d, %d ) : ",cell->cle.x,cell->cle.y);
+    afficher(cell->valeur);
+    printf("\n");
 
     cell = trouveCouple(dico,Inconnu);
-    if(cell!=NULL)printf("( %d, %d ) : %d \n",cell->cle.x,cell->cle.y,cell->valeur);
+    if(cell!=NULL)printf("PROBLEME ");
     else printf("-1\n");
 
     cell = trouveCouple(dico,A);
-    printf("( %d, %d ) : %d \n",cell->cle.x,cell->cle.y,cell->valeur);
+    printf("( %d, %d ) : ",cell->cle.x,cell->cle.y);
+    afficher(cell->valeur);
+    printf("\n");
 
     cell = trouveCouple(dico,D);
-    printf("( %d, %d ) : %d \n",cell->cle.x,cell->cle.y,cell->valeur);
+    printf("( %d, %d ) : ",cell->cle.x,cell->cle.y);
+    afficher(cell->valeur);
+    printf("\n");
 
     //void detruireEntree (Dictionnaire *dict, PointImage cle);
     printf("\n###########################\n Test detruireEntree \n###########################\n");
@@ -85,7 +104,7 @@ int main(int argc, char * argv[]){
 
     afficherDict(dico);
 
-    printf("\n###########################\n Test ajoutModifEntree (Modif (-2048,-2048) = 248 )\n###########################\n");
+    printf("\n###########################\n Test ajoutModifEntree (Modif (162,-2048) = 248 )\n###########################\n");
 
     ajoutModifEntree(dico, D, 248);
 
@@ -96,25 +115,32 @@ int main(int argc, char * argv[]){
 
     p = popEntree(dico,C);
     afficherDict(dico);
-    printf("( %d, %d ) : %d \n",C.x,C.y,p);
+    printf("( %d, %d ) : ",C.x,C.y);
+    afficher(p);
+    printf("\n\n\n");
+
 
     p = popEntree(dico,D);
     afficherDict(dico);
-    printf("( %d, %d ) : %d \n",D.x,D.y,p);
+    printf("( %d, %d ) : ",D.x,D.y);
+    afficher(p);
+    printf("\n\n\n");
 
     ajoutModifEntree(dico, C, 69);
     ajoutModifEntree(dico, D, 14);
     afficherDict(dico);
 
-    p = popEntree(dico,B);
+    p = popEntree(dico,A);
     afficherDict(dico);
-    printf("( %d, %d ) : %d \n",B.x,B.y,p);
+    printf("( %d, %d ) : ",A.x,A.y);
+    afficher(p);
+    printf("\n\n\n");
 
 
 
     //PointImage recupXminYmin(Dictionnaire *dict);
     printf("\n###########################\n Test recupXminYmin \n###########################\n");
-    ajoutModifEntree(dico, B, 14);
+    ajoutModifEntree(dico, A, 55);
     afficherDict(dico);
     minMax = recupXminYmin(dico);
     printf("( %d, %d )\n",minMax.x, minMax.y);

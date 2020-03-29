@@ -12,20 +12,20 @@
 
 struct CellulePix{
     Pixel P;
-    struct Cellule *suivant;
+    struct CellulePix *suivant;
 };
-typedef struct Cellule CellulePix;
+typedef struct CellulePix CellulePix;
 
 struct SequencePix{
-    Cellule *tete;
+    CellulePix *tete;
     unsigned int taille;
 };
-typedef struct Sequence SequencePix;
+typedef struct SequencePix SequencePix;
 
 typedef struct cellule_dict {
     struct cellule_dict *suivant;
     PointImage cle;
-    SequencePix valeur;
+    SequencePix *valeur;
 } Cellule_dict;
 
 typedef struct dictionnaire{
@@ -38,9 +38,9 @@ typedef struct tableauCoupleFlottant{
     Point2D *tab;
 }TableauCoupleFlottant;
 
-void afficher (Sequence* seq);
+void afficher (SequencePix* seq);
 
-void ajoute_queue(Sequence *l, Point n);
+void ajoute_queue(SequencePix *l, Pixel P);
 
 CellulePix* nouvelleCellule (void);
 
@@ -52,9 +52,11 @@ Cellule_dict* nouvelle_cellule_dict (void);
 
 Dictionnaire *nouveauDict (void) ;
 
+SequencePix * nouvelleSequence (void);
+
 void afficherDict (Dictionnaire *dict);
 
-Pixel recupValeur (Dictionnaire *dict, PointImage cle);
+SequencePix *recupValeur (Dictionnaire *dict, PointImage cle);
 
 Cellule_dict *trouveCouple(Dictionnaire *dict, PointImage cle);
 
@@ -64,7 +66,7 @@ void detruireEntree (Dictionnaire *dict, PointImage cle);
 
 void detruireDico (Dictionnaire *dict );
 
-Pixel popEntree (Dictionnaire *dict, PointImage cle);
+SequencePix *popEntree (Dictionnaire *dict, PointImage cle);
 
 PointImage recupXminYmin(Dictionnaire *dict);
 
@@ -72,6 +74,8 @@ PointImage recupXmaxYmax(Dictionnaire *dict);
 
 //NON TESTE
 Image dictToImage(Dictionnaire *dict);
+
+Pixel moyenneSeqPix(SequencePix * seq);
 
 //NON TESTE
 TableauCoupleFlottant *creerTableauCoordonnees(UINT L,UINT H);

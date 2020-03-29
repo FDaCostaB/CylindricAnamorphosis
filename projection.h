@@ -15,4 +15,6 @@ Point projection_point(Point P,Point V,double r);
 
 void remplissage_tableau_proj(TableauCoupleFlottant *T, Point P, Point V, double r);
 
+Dictionnaire *pixelisationResultat(TableauCoupleFlottant* Proj);
+
 #endif //PAN431_PROJECTION_H

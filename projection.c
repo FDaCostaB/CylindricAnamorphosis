@@ -31,7 +31,7 @@ void remplissage_tableau_proj(TableauCoupleFlottant *T, Point P, Point V, double
     UINT H = T->H;
     double val = P.y;
 
-    for (int i=0;i<H;i++){
+    for (int i=0;i<=H;i++){
         for (int j=0;j<=L;j++){
 
             Point res = projection_point(P,V,r);
@@ -52,3 +52,4 @@ void remplissage_tableau_proj(TableauCoupleFlottant *T, Point P, Point V, double
     }
 }
 
+Dictionnaire *pixelisationResultat(TableauCoupleFlottant* Proj);

@@ -240,8 +240,6 @@ bool est_vide(Image I){
   return true;
 }
 
-Dictionnaire *pixelisationResultat(TableauCoupleFlottant* Proj);
-=======
 void affich_point_2D(Point2D A){
     printf("(%lf ; %lf) \n",A.x,A.y);
 }
