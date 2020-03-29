@@ -191,7 +191,6 @@ int main(int argc, char * argv[]){
     /* NON TESTE
      *
      * Image dictToImage(Dictionnaire *dict);
-     * TableauCoupleFlottant *creerTableauCoordonnees(UINT L,UINT H);
      *
      * */
 
