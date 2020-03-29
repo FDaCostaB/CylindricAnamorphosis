@@ -7,6 +7,10 @@
 
 #include <stdbool.h>
 #include "types_erreur.h"
+#include "geometrie3D.h"
+
+/// Macro donnant l'indice d'un pixel de coordonnées (_x,_y) de l'image _I
+#define INDICE_PIXEL(_I,_x,_y) ((_x))+(_I).L*((_y))
 
 /// Type entier positif
 typedef unsigned int UINT;
@@ -17,12 +21,12 @@ typedef UINT Pixel;
 /// Point 2d de |N
 typedef struct PointImage {
     int x , y ;
-} PointImage ;
+}PointImage ;
 
 /// Point 2d de |R
 typedef struct Point2D {
     double x , y ;
-} Point2D ;
+}Point2D ;
 
 /// Type Image
 typedef struct Image_
@@ -62,4 +66,7 @@ void ecrire_image(Image I,FILE *f);
 
 ///Test si l'image est toute blanche
 bool est_vide(Image I);
+
+void affich_point_2D(Point2D A);
+
 #endif /* _IMAGE_H_ */

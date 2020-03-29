@@ -22,7 +22,6 @@ Point add_point(Point A, Point B){
     return P;
 }
 
-
 Vecteur vect_bipoint(Point A, Point B){
     Vecteur V = {B.x - A.x, B.y - A.y, B.z - A.z} ;
     return V;
