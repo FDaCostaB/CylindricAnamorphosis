@@ -18,7 +18,7 @@ int main(int argc, char * argv[]){
     Dictionnaire *res=nouveauDict();
 
     Point2D A = { 0.0 , 0.0 }; Point2D B = { 0.0 , 0.0 };
-    Point2D D = { 0.0 , 0.0 }; Point2D E = { 0.0 , 0.0 };
+    Point2D C = { 0.0 , 0.0 }; Point2D D = { 0.0 , 0.0 };
 
     T = creerTableauCoordonnees(1,1);
 
