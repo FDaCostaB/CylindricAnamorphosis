@@ -22,21 +22,26 @@ struct SequencePix{
 };
 typedef struct SequencePix SequencePix;
 
-typedef struct cellule_dict {
-    struct cellule_dict *suivant;
+typedef struct celluleLinkedL {
+    struct celluleLinkedL *suivant;
     PointImage cle;
-    SequencePix *valeur;
-} Cellule_dict;
+    Pixel valeur;
+} CelluleLinkedList;
 
-typedef struct dictionnaire{
-    Cellule_dict *tete;
+typedef struct LinkedList{
+    CelluleLinkedList *tete;
     unsigned int taille;
-}Dictionnaire;
+}LinkedList;
 
 typedef struct tableauCoupleFlottant{
     UINT L,H;
     Point2D *tab;
 }TableauCoupleFlottant;
+
+typedef struct tabSeqPix{
+    UINT L,H;
+    SequencePix **tab;
+}TabSeqPix;
 
 void afficher (SequencePix* seq);
 
@@ -48,35 +53,39 @@ void detruireCellule (CellulePix*);
 
 void detruireSequencePix (SequencePix*);
 
-Cellule_dict* nouvelle_cellule_dict (void);
+CelluleLinkedList* nouvelleCelluleLinkedL (void);
 
-Dictionnaire *nouveauDict (void) ;
+LinkedList *nouvelleLinkedL (void) ;
 
-SequencePix * nouvelleSequence (void);
+SequencePix nouvelleSequence (void);
 
-void afficherDict (Dictionnaire *dict);
+void afficherLinkedL (LinkedList *list);
 
-SequencePix *recupValeur (Dictionnaire *dict, PointImage cle);
+//Meaning less as they are no more unique key
+//SequencePix *recupValeur (LinkedList, PointImage cle);
+//Cellule_dict *trouveCouple(Dictionnaire *dict, PointImage cle);
+//void ajoutModifEntree(Dictionnaire *dict, PointImage cle,Pixel val);
+//void detruireEntree (Dictionnaire *dict, PointImage cle);
+//SequencePix *popEntree (Dictionnaire *dict, PointImage cle);
 
-Cellule_dict *trouveCouple(Dictionnaire *dict, PointImage cle);
+void ajoutEntree(LinkedList *list, PointImage cle,Pixel val);
 
-void ajoutModifEntree(Dictionnaire *dict, PointImage cle,Pixel val);
+void ajoutEntree(LinkedList *list, PointImage cle,Pixel val);
 
-void detruireEntree (Dictionnaire *dict, PointImage cle);
+void detruireLinkedL (LinkedList *list );
 
-void detruireDico (Dictionnaire *dict );
+PointImage recupXminYmin(LinkedList *list);
 
-SequencePix *popEntree (Dictionnaire *dict, PointImage cle);
-
-PointImage recupXminYmin(Dictionnaire *dict);
-
-PointImage recupXmaxYmax(Dictionnaire *dict);
+PointImage recupXmaxYmax(LinkedList *list);
 
 Pixel moyenneSeqPix(SequencePix * seq);
 
 TableauCoupleFlottant *creerTableauCoordonnees(UINT L,UINT H);
 
-//NON TESTE
-Image dictToImage(Dictionnaire *dict);
+TabSeqPix *creerTableauSeqPixel(UINT L,UINT H);
+
+TabSeqPix *convertLinkedLToTabSeqPix(LinkedList *list);
+
+Image tabSeqPixToImage(TabSeqPix *tab);
 
 #endif //INC_2ÈME_ANNÉE_LISTES_H

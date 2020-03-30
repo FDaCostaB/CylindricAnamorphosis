@@ -50,7 +50,7 @@ void remplissage_tableau_proj(TableauCoupleFlottant *T, Point P, Point V, double
     }
 }
 
-void pixelisationPoint(TableauCoupleFlottant* Proj, Dictionnaire *res, int x, int y, Pixel val){
+void pixelisationPoint(TableauCoupleFlottant* Proj, LinkedList *res, int x, int y, Pixel val){
     Point2D min;
     Point2D max;
     PointImage minInt;
@@ -87,7 +87,7 @@ void pixelisationPoint(TableauCoupleFlottant* Proj, Dictionnaire *res, int x, in
     printf("\nMin : ( %d , %d) , Max : ( %d , %d)\n",minInt.x,minInt.y,maxInt.x,maxInt.y);*/
     for(int i = minInt.x; i < maxInt.x; i++){
         for(int j = minInt.y; j < maxInt.y; j++){
-            ajoutModifEntree(res, (PointImage) {i,j}, val);
+            ajoutEntree(res, (PointImage) {i,j}, val);
         }
     }
     /*printf(" Point : ( %d, %d ) \n  Rectangle : ( %d , %d ) ( %d , %d )\n Valeur : %d \n", x , y, minInt.x, minInt.y, maxInt.x, maxInt.y,val);
@@ -100,13 +100,13 @@ void pixelisationPoint(TableauCoupleFlottant* Proj, Dictionnaire *res, int x, in
     printf("\n");*/
 }
 
-Dictionnaire *pixelisationResultat(TableauCoupleFlottant* Proj, Image *image){
-    Dictionnaire *res=nouveauDict();
+LinkedList *pixelisationResultat(TableauCoupleFlottant* Proj, Image *image){
+    LinkedList *res=nouvelleLinkedL();
     for(int y = 0; y < image->H; y++){
         for(int x = 0; x < image->L; x++){
             pixelisationPoint(Proj, res, x, y, image->tab[ x + (y * image->L) ]);
         }
-        printf("Ligne : %d\n",y);
+        if(y%100==0)printf("Current line : %d\n",y);
     }
     return res;
 }

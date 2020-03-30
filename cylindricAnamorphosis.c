@@ -39,13 +39,14 @@ int main(int argc, char * argv[]){
     remplissage_tableau_proj(T,P,V,r);
     printf("\nProjection terminée\n");
 
-    Dictionnaire *dict = nouveauDict();
-    dict = pixelisationResultat(T,&imageLue);
+    LinkedList *list = nouvelleLinkedL();
+    list = pixelisationResultat(T,&imageLue);
     printf("\nPixelisation terminée\n");
-    //afficherDict(dict);
 
     Image image_modifiee;
-    image_modifiee = dictToImage(dict);
+    TabSeqPix *tab;
+    tab = convertLinkedLToTabSeqPix(list);
+    image_modifiee = tabSeqPixToImage(tab);
     printf("Transformation en image terminée\n");
 
     ecrire_image(image_modifiee,res);

@@ -28,7 +28,6 @@ void ajoute_queue(SequencePix *S, Pixel P) {
     return;
 }
 
-
 void afficher (SequencePix* seq)
 {
     CellulePix *curr;
@@ -67,17 +66,17 @@ void detruireSequencePix (SequencePix* seq){
     free(seq);
 }
 
-Cellule_dict* nouvelle_cellule_dict (){
-    Cellule_dict *cel = (Cellule_dict*)malloc(sizeof(Cellule_dict));
+CelluleLinkedList* nouvelleCelluleLinkedL (void){
+    CelluleLinkedList *cel = (CelluleLinkedList*)malloc(sizeof(CelluleLinkedList));
     cel->suivant = NULL;
     return cel;
 }
 
-Dictionnaire *nouveauDict (void){
-    Dictionnaire *dict = (Dictionnaire *)malloc(sizeof(Dictionnaire));
-    dict->tete=NULL;
-    dict->taille = 0;
-    return dict;
+LinkedList *nouvelleLinkedL (void){
+    LinkedList* list = (LinkedList *)malloc(sizeof(LinkedList));
+    list->tete = NULL;
+    list->taille = 0;
+    return list;
 }
 
 SequencePix * nouvelleSequencePix (void){
@@ -87,139 +86,71 @@ SequencePix * nouvelleSequencePix (void){
     return seq;
 }
 
-void afficherDict (Dictionnaire *dict){
-    Cellule_dict *curr = dict->tete;
+void afficherLinkedL (LinkedList *list){
+    CelluleLinkedList *curr = list->tete;
     if(curr==NULL) {
-        printf("Dictionnaire vide...\n");
+        printf("Linked list is empty...\n");
     } else{
         printf("{ ");
         while(curr!=NULL){
             if(curr->suivant==NULL){
-                printf(" ( %d, %d ) : ", curr->cle.x, curr->cle.y);
-                afficher(curr->valeur);
-                printf(" }\n\n");
+                printf(" ( %d, %d ) : %d }\n\n", curr->cle.x, curr->cle.y,curr->valeur);
             }else{
-                printf(" ( %d, %d ) :", curr->cle.x, curr->cle.y);
-                afficher(curr->valeur);
-                printf(" ,\n");
+                printf(" ( %d, %d ) : %d ,", curr->cle.x, curr->cle.y,curr->valeur);
             }
             curr = curr->suivant;
         }
     }
 }
 
-SequencePix *recupValeur (Dictionnaire *dict, PointImage cle){
-    Cellule_dict *curr = dict->tete;
-    while(curr!=NULL){
-        if(curr->cle.x==cle.x && curr->cle.y==cle.y){
-            return curr->valeur;
-        }
-        curr = curr->suivant;
-    }
-    return NULL;
+void ajoutEntree(LinkedList *list, PointImage cle,Pixel val){
+    CelluleLinkedList *nouv = nouvelleCelluleLinkedL();
+    nouv->cle.x=cle.x;
+    nouv->cle.y=cle.y;
+    nouv->valeur=val;
+    nouv->suivant = list->tete;
+    list->tete=nouv;
+    list->taille ++;
 }
 
-Cellule_dict *trouveCouple(Dictionnaire *dict, PointImage cle) {
-    Cellule_dict *curr = dict->tete;
-    while(curr!=NULL){
-        if(curr->cle.x==cle.x && curr->cle.y==cle.y){
-            return curr;
-        }
-        curr = curr->suivant;
-    }
-    return NULL;
+void ajouteTete(SequencePix *S, Pixel P) {
+    CellulePix * nouv= (CellulePix *) malloc(sizeof(CellulePix));
+    nouv->P = P;
+    nouv->suivant=S->tete;
+    S->tete=nouv;
+    S->taille ++;
+    return;
 }
 
-void ajoutModifEntree(Dictionnaire *dict, PointImage cle,Pixel val){
-    Cellule_dict *res =trouveCouple(dict,cle);
-    if(res!=NULL){
-        ajoute_queue(res->valeur,val);
-    }else{
-        Cellule_dict *nouv = nouvelle_cellule_dict();
-        nouv->cle.x=cle.x;
-        nouv->cle.y=cle.y;
-        nouv->valeur=nouvelleSequencePix();
-        ajoute_queue(nouv->valeur,val);
-        nouv->suivant = dict->tete;
-        dict->tete=nouv;
-        dict->taille ++;
-    }
-}
-
-void detruireEntree (Dictionnaire *dict, PointImage cle){
-    Cellule_dict *curr = dict->tete;
-    Cellule_dict *aSuppr = NULL;
+void detruireTete (LinkedList *list){
+    CelluleLinkedList *curr = list->tete;
+    CelluleLinkedList *aSuppr = NULL;
     if(curr==NULL) {
+        printf("Head null pointer...");
         return;
     }
-    if(curr->cle.x==cle.x && curr->cle.y==cle.y){
+    else{
         aSuppr=curr;
-        dict->tete=curr->suivant;
-        detruireSequencePix(aSuppr->valeur);
+        list->tete=curr->suivant;
         free(aSuppr);
         return;
     }
-    while(curr!=NULL && curr->suivant!=NULL){
-        if(curr->suivant->cle.x==cle.x && curr->suivant->cle.y==cle.y){
-            aSuppr=curr->suivant;
-            curr->suivant=curr->suivant->suivant;
-        }
-        curr = curr->suivant;
-    }
-    if(aSuppr!=NULL){
-        detruireSequencePix(aSuppr->valeur);
-        free(aSuppr);
-    }
-    else printf("Clé introuvable et dictionnaire non modifié...");
 }
 
-void detruireDico (Dictionnaire *dict) {
-    if (dict != NULL) {
-        while (dict->tete != NULL){
-            detruireEntree(dict, dict->tete->cle);
+void detruireLinkedL (LinkedList *list ) {
+    if (list != NULL) {
+        while (list->tete != NULL){
+            detruireTete(list);
         }
-        dict->taille=0;
-        free(dict);
+        free(list);
     }
     else {
         printf("Dictionnaire déjà vide...");
     }
 }
 
-SequencePix *popEntree (Dictionnaire *dict, PointImage cle){
-    Cellule_dict *curr = dict->tete;
-    Cellule_dict *aSuppr = NULL;
-    SequencePix *res;
-    if(curr==NULL) {
-        return NULL;
-    }
-    if(curr->cle.x==cle.x && curr->cle.y==cle.y){
-        aSuppr=curr;
-        dict->tete=curr->suivant;
-        res = aSuppr->valeur;
-        free(aSuppr);
-        return res;
-    }
-    while(curr!=NULL && curr->suivant!=NULL){
-        if(curr->suivant->cle.x==cle.x && curr->suivant->cle.y==cle.y){
-            aSuppr=curr->suivant;
-            curr->suivant=curr->suivant->suivant;
-        }
-        curr = curr->suivant;
-    }
-    if(aSuppr!=NULL){
-        res=aSuppr->valeur;
-        free(aSuppr);
-        return res;
-    }
-    else {
-        ERREUR_FATALE("Clé introuvable et Pop impossible.\n");
-    }
-
-}
-
-PointImage recupXminYmin(Dictionnaire *dict){
-    Cellule_dict *curr = dict->tete;
+PointImage recupXminYmin(LinkedList *list){
+    CelluleLinkedList *curr = list->tete;
     PointImage min;
     if(curr==NULL) {
         ERREUR_FATALE("Dictionnaire vide");
@@ -234,8 +165,8 @@ PointImage recupXminYmin(Dictionnaire *dict){
     return min;
 }
 
-PointImage recupXmaxYmax(Dictionnaire *dict){
-    Cellule_dict *curr = dict->tete;
+PointImage recupXmaxYmax(LinkedList *list){
+    CelluleLinkedList *curr = list->tete;
     PointImage max;
     if(curr==NULL) {
         ERREUR_FATALE("Dictionnaire vide");
@@ -250,15 +181,30 @@ PointImage recupXmaxYmax(Dictionnaire *dict){
     return max;
 }
 
-///Indice pixel 0<=x<=L-1 et 0<=y<=H-1
-Image dictToImage(Dictionnaire *dict){
-    Cellule_dict *curr = dict->tete;
-    PointImage max = recupXmaxYmax(dict);
-    PointImage min = recupXminYmin(dict);
-    Image res = creer_image(max.x - min.x + 1,max.y - min.y + 1);
+/// Indice pixel 0<=x<=L-1 et 0<=y<=H-1
+TabSeqPix *convertLinkedLToTabSeqPix(LinkedList *list){
+    CelluleLinkedList *curr = list->tete;
+    CelluleLinkedList *aSuppr;
+    PointImage max = recupXmaxYmax(list);
+    PointImage min = recupXminYmin(list);
+    TabSeqPix *res = creerTableauSeqPixel(max.x - min.x + 1,max.y - min.y + 1);
     while(curr!=NULL){
-        res.tab[( curr->cle.x - min.x ) + ( curr->cle.y - min.y ) * (max.x - min.x + 1) ] = moyenneSeqPix(curr->valeur);
+        ajouteTete(res->tab[( curr->cle.x - min.x ) + ( curr->cle.y - min.y ) * (max.x - min.x + 1) ],curr->valeur);
+        aSuppr = curr;
         curr = curr->suivant;
+        free(aSuppr);
+
+    }
+    free(list);
+    return res;
+}
+
+Image tabSeqPixToImage(TabSeqPix *tab){
+    Image res = creer_image(tab->L,tab->H);
+    for(int x = 0 ; x < tab->L ; x++){
+        for(int y = 0 ; y < tab->H ; y++){
+            if(tab->tab[x+y*tab ->L]->tete !=NULL)res.tab[x + y * tab->L ] = moyenneSeqPix(tab->tab[x + y * tab->L  ]);
+        }
     }
     return res;
 }
@@ -289,5 +235,23 @@ TableauCoupleFlottant *creerTableauCoordonnees(UINT L,UINT H){
         ERREUR_FATALE("Impossible de creer une image");
     }
 
+    return tab;
+}
+
+TabSeqPix *creerTableauSeqPixel(UINT L,UINT H){
+    TabSeqPix *tab = (TabSeqPix*)malloc(sizeof(TabSeqPix));
+    tab->L = L;
+    tab->H = H;
+    tab->tab = (SequencePix **) malloc(sizeof(SequencePix*)*L*H);
+
+    /* test si le tableau a ete correctement alloue */
+    if (tab->tab == (SequencePix **)NULL){
+        ERREUR_FATALE("Impossible de creer une image");
+    }
+    for(int x=0;x<L;x++){
+        for(int y=0;y<H;y++){
+            tab->tab[x + y*L]=nouvelleSequencePix();
+        }
+    }
     return tab;
 }
