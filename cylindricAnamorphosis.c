@@ -33,7 +33,7 @@ int main(int argc, char * argv[]){
     V.y = 0;
     V.z = 2*H;
 
-    r = 0.60 * L;
+    r = 0.57 * L;
 
     TableauCoupleFlottant *T = creerTableauCoordonnees(L,H);
     remplissage_tableau_proj(T,P,V,r);
