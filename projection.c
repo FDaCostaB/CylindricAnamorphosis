@@ -15,14 +15,6 @@ Point projection_point(Point P,Point V,double r){
 
     Point res = intersection_feuille(intersect_point_cylindre(P,V,r),R);
 
-    if (P.z==0 && P.y==105) {
-        printf("Point v :");
-        affich_point(V);
-        printf("vecteur n :");
-        affich_vect(N);
-        printf("vecteur r :");
-        affich_vect(R);
-    }
     return res;
 }
 
