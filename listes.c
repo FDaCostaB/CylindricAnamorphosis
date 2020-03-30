@@ -255,9 +255,9 @@ Image dictToImage(Dictionnaire *dict){
     Cellule_dict *curr = dict->tete;
     PointImage max = recupXmaxYmax(dict);
     PointImage min = recupXminYmin(dict);
-    Image res = creer_image(max.x - min.x,max.y - min.y);
+    Image res = creer_image(max.x - min.x + 1,max.y - min.y + 1);
     while(curr!=NULL){
-        res.tab[( curr->cle.x - min.x ) + ( curr->cle.y - min.y ) * (max.x - min.x + 1) ]=moyenneSeqPix(curr->valeur);
+        res.tab[( curr->cle.x - min.x ) + ( curr->cle.y - min.y ) * (max.x - min.x + 1) ] = moyenneSeqPix(curr->valeur);
         curr = curr->suivant;
     }
     return res;

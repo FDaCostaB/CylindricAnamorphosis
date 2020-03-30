@@ -90,14 +90,14 @@ void pixelisationPoint(TableauCoupleFlottant* Proj, Dictionnaire *res, int x, in
             ajoutModifEntree(res, (PointImage) {i,j}, val);
         }
     }
-    printf(" Point : ( %d, %d ) \n  Rectangle : ( %d , %d ) ( %d , %d )\n Valeur : %d \n", x , y, minInt.x, minInt.y, maxInt.x, maxInt.y,val);
+    /*printf(" Point : ( %d, %d ) \n  Rectangle : ( %d , %d ) ( %d , %d )\n Valeur : %d \n", x , y, minInt.x, minInt.y, maxInt.x, maxInt.y,val);
     printf(" Projection des coins : ");
     for(int i = x; i <= x+1; i++){
         for(int j = y; j <= y+1; j++){
             printf(" ( %f , %f ) ", Proj->tab[ i + j * Proj->L ].x, Proj->tab[ i + j * Proj->L ].y);
         }
     }
-    printf("\n");
+    printf("\n");*/
 }
 
 Dictionnaire *pixelisationResultat(TableauCoupleFlottant* Proj, Image *image){
