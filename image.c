@@ -187,8 +187,15 @@ Image lire_fichier_image(char *nom_f)
 
 	/* cr�ation de l'image I de dimensions L x H */
 	I=creer_image(x,y);
-	
-	
+
+    while (res_fscanf>'9' || res_fscanf<'0'){
+        fscanf(f,"%c",&res_fscanf);
+    }
+
+    while (res_fscanf>='0' && res_fscanf<='9'){
+        fscanf(f,"%c",&res_fscanf);
+    }
+
 	/* lecture des pixels du fichier - lecture caract�re par caract�re
 	   seuls les caracteres '0' (BLANC) ou '1' (NOIR) 
 	   doivent etre pris en compte */
@@ -222,9 +229,10 @@ void ecrire_image(Image I,FILE *f){
   fprintf(f,"%d %d\n", I.L, I.H);
   fprintf(f,"255\n");
   for (int i=0; i<L*H; i++) {
-    fprintf(f,"%u ",I.tab[i]);
-    if ((i+1)%L==0 )
-      fprintf(f,"\n");
+      if(I.tab[i]<100)fprintf(f," ");
+      if(I.tab[i]<10)fprintf(f," ");
+      fprintf(f,"%u ",I.tab[i]);
+      if ((i+1)%L==0 ) fprintf(f,"\n");
   }
   fprintf(f,"\n");
 }

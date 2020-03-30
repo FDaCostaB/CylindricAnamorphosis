@@ -31,24 +31,23 @@ int main(int argc, char * argv[]){
 
     V.x = 5*H;
     V.y = 0;
-    V.z = 3*H;
+    V.z = 2*H;
 
     r = 1.20 * L;
 
     TableauCoupleFlottant *T = creerTableauCoordonnees(L,H);
     remplissage_tableau_proj(T,P,V,r);
-    printf("Projection terminée\n");
+    printf("\nProjection terminée\n");
 
     Dictionnaire *dict = nouveauDict();
     dict = pixelisationResultat(T,&imageLue);
-    printf("Pixelisation terminée\n");
-    afficherDict(dict);
+    printf("\nPixelisation terminée\n");
+    //afficherDict(dict);
 
     Image image_modifiee;
     image_modifiee = dictToImage(dict);
     printf("Transformation en image terminée\n");
 
     ecrire_image(image_modifiee,res);
-
-    printf("Creation of the new image finished. Open %s to see the result (if it doesn't look like anything, it's successful !).",argv[2]);
+    printf("Creation of the new image finished. Open %s to see the result (if it doesn't look like anything, it's successful !).\n",argv[2]);
 }
