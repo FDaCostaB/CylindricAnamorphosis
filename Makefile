@@ -37,7 +37,7 @@ INCLUDEOPTS = -I$(INCDIR)
 COMPILOPTS = -g -Wall $(INCLUDEOPTS)
 
 # liste des executables
-EXECUTABLES = test test_dico test_proj test_pixelisation cylindricAnamorphosis
+EXECUTABLES = cylindricAnamorphosis
 
 
 #############################################################################
