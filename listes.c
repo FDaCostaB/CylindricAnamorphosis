@@ -203,7 +203,7 @@ Image tabSeqPixToImage(TabSeqPix *tab){
     Image res = creer_image(tab->L,tab->H);
     for(int x = 0 ; x < tab->L ; x++){
         for(int y = 0 ; y < tab->H ; y++){
-            if(tab->tab[x+y*tab ->L]->tete !=NULL)res.tab[x + y * tab->L ] = moyenneSeqPix(tab->tab[x + y * tab->L  ]);
+            if(tab->tab[x+y*tab ->L]->tete !=NULL)res.tab[(x + ((tab->H -1) - y) * tab->L) ] = moyenneSeqPix(tab->tab[x + y * tab->L  ]);
         }
     }
     return res;
