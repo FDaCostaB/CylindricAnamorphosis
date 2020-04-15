@@ -16,15 +16,15 @@ int main(int argc, char * argv[]){
     double r; //cylinder diameter
     FILE *res;
 
-    if(argc != 3 ) ERREUR_FATALE("Utilisation commande : ./main fichier_image fichier_résultat\n");
+    if(argc != 3 ) ERREUR_FATALE("Command use : ./main image_file result_file\n");
     res = fopen(argv[2],"w");
-    if(res == NULL) ERREUR_FATALE("Fichier resultat compromis");
+    if(res == NULL) ERREUR_FATALE("Can't open result file");
 
     Image imageLue = lire_fichier_image(argv[1]);
 
     double L = (double)largeur_image(imageLue);
     double H = (double)hauteur_image(imageLue);
-    printf("Hauteur = %lf et largeur = %lf\n",H,L);
+    printf("Height = %lf, Width = %lf\n",H,L);
     P.x = 0;
     P.y = -L/2.0;
     P.z = H;
@@ -37,17 +37,17 @@ int main(int argc, char * argv[]){
 
     TableauCoupleFlottant *T = creerTableauCoordonnees(L,H);
     remplissage_tableau_proj(T,P,V,r);
-    printf("\nProjection terminée\n");
+    printf("\nProjection finished\n");
 
     LinkedList *list = nouvelleLinkedL();
     list = pixelisationResultat(T,&imageLue);
-    printf("\nPixelisation terminée\n");
+    printf("\nPixelisation finished\n");
 
     Image image_modifiee;
     TabSeqPix *tab;
     tab = convertLinkedLToTabSeqPix(list);
     image_modifiee = tabSeqPixToImage(tab);
-    printf("Transformation en image terminée\n");
+    printf("Picture transformation finished\n");
 
     ecrire_image(image_modifiee,res);
     printf("Creation of the new image finished. Open %s to see the result (if it doesn't look like anything, it's successful !).\n",argv[2]);
